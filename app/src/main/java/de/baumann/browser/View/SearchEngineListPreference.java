@@ -17,6 +17,7 @@ import java.util.Objects;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
+import de.baumann.browser.Unit.LayoutUnit;
 
 public class SearchEngineListPreference extends ListPreference {
 
@@ -57,14 +58,14 @@ public class SearchEngineListPreference extends ListPreference {
         builder.setView(dialogView);
         builder.setTitle(R.string.menu_edit);
         builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
-            String domain = editText.getText().toString().trim();
+            String domain = LayoutUnit.getText(editText);
             if (domain.isEmpty()) {
                 NinjaToast.show(getContext(), R.string.toast_input_empty);
             } else if (!BrowserUnit.isURL(domain)) {
                 NinjaToast.show(getContext(), R.string.toast_invalid_domain);
             } else {
-                sp.edit().putString(getContext().getString(R.string.sp_search_engine), "8").commit();
-                sp.edit().putString(getContext().getString(R.string.sp_search_engine_custom), domain).commit();
+                sp.edit().putString(getContext().getString(R.string.sp_search_engine), "8")
+                        .putString(getContext().getString(R.string.sp_search_engine_custom), domain).apply();
 
                 hideSoftInput(editText);
                 dialog.cancel();
