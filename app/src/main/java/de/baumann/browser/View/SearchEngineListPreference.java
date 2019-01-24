@@ -10,54 +10,48 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.ListPreference;
 
-import java.util.Objects;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 import de.baumann.browser.Unit.LayoutUnit;
 
+@SuppressWarnings("unused")
 public class SearchEngineListPreference extends ListPreference {
 
     public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
     }
 
-    public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+    public SearchEngineListPreference(@NonNull Context context, @NonNull AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public SearchEngineListPreference(@NonNull Context context) {
-        this(context, null);
-    }
-
-    private void init() {
-        setPositiveButtonText(R.string.dialog_button_custom);
+        super(context);
     }
 
     private void showEditDialog() {
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         View dialogView = View.inflate(getContext(), R.layout.dialog_edit_title, null);
 
         final EditText editText = dialogView.findViewById(R.id.dialog_edit);
-
-        editText.setHint(R.string.dialog_se_hint);
         String custom = sp.getString(getContext().getString(R.string.sp_search_engine_custom), "");
-        editText.setText(custom);
-        editText.setSelection(Objects.requireNonNull(custom).length());
 
-        builder.setView(dialogView);
-        builder.setTitle(R.string.menu_edit);
-        builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
+        editText.setHint(R.string.dialog_title_hint);
+        editText.setText(custom);
+
+        MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+        action_ok.setOnClickListener(view -> {
             String domain = LayoutUnit.getText(editText);
             if (domain.isEmpty()) {
                 NinjaToast.show(getContext(), R.string.toast_input_empty);
@@ -65,34 +59,33 @@ public class SearchEngineListPreference extends ListPreference {
                 NinjaToast.show(getContext(), R.string.toast_invalid_domain);
             } else {
                 sp.edit().putString(getContext().getString(R.string.sp_search_engine), "8")
-                        .putString(getContext().getString(R.string.sp_search_engine_custom), domain).apply();
-
+                        .putString(getContext().getString(R.string.sp_search_engine_custom), domain)
+                        .apply();
                 hideSoftInput(editText);
-                dialog.cancel();
+                bottomSheetDialog.cancel();
             }
         });
-        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> {
-            dialog.cancel();
+        MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+        action_cancel.setOnClickListener(view -> {
             hideSoftInput(editText);
+            bottomSheetDialog.cancel();
         });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        showSoftInput(editText);
+        bottomSheetDialog.setContentView(dialogView);
+        bottomSheetDialog.show();
     }
 
     private void hideSoftInput(@NonNull View view) {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void showSoftInput(@NonNull View view) {
-        view.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    @Override
+    public boolean callChangeListener(@NonNull Object newValue) {
+        String selected = (String) newValue;
+        if (selected.equals("8")) {
+            showEditDialog();
+        }
+        return super.callChangeListener(newValue);
     }
 }
