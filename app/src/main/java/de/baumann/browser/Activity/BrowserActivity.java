@@ -712,7 +712,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
 
         switch (v.getId()) {
-
             // Menu overflow
 
             case R.id.tab_prev:

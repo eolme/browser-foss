@@ -1,28 +1,30 @@
 package de.baumann.browser.View;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GestureDetectorCompat;
+
+import org.jetbrains.annotations.Contract;
 
 public class SwipeTouchListener implements OnTouchListener {
 
     private final GestureDetectorCompat gestureDetector;
 
-    public SwipeTouchListener(Context ctx){
+    protected SwipeTouchListener(@NonNull Context ctx) {
         gestureDetector = new GestureDetectorCompat(ctx, new GestureListener());
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        } else {
-            return v.performClick();
-        }
+    public boolean onTouch(@NonNull View v, @NonNull MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
     }
 
     private final class GestureListener implements GestureDetector.OnGestureListener {
@@ -30,33 +32,36 @@ public class SwipeTouchListener implements OnTouchListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
+        @Contract(pure = true)
         @Override
-        public boolean onDown(MotionEvent e) {
+        public boolean onDown(@NonNull MotionEvent e) {
             return false;
         }
 
         @Override
-        public void onShowPress(MotionEvent e) {
-
+        public void onShowPress(@NonNull MotionEvent e) {
         }
 
+        @Contract(pure = true)
         @Override
-        public boolean onSingleTapUp(MotionEvent e) {
+        public boolean onSingleTapUp(@NonNull MotionEvent e) {
+            return false;
+        }
+
+        @Contract(pure = true)
+        @Override
+        public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2,
+                                float distanceX, float distanceY) {
             return false;
         }
 
         @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            return false;
+        public void onLongPress(@NonNull MotionEvent e) {
         }
 
         @Override
-        public void onLongPress(MotionEvent e) {
-
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2,
+                               float velocityX, float velocityY) {
             boolean result = false;
             try {
                 float diffY = e2.getY() - e1.getY();
@@ -70,8 +75,7 @@ public class SwipeTouchListener implements OnTouchListener {
                         }
                     }
                     result = true;
-                }
-                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         onSwipeBottom();
                     } else {
@@ -79,9 +83,8 @@ public class SwipeTouchListener implements OnTouchListener {
                     }
                 }
                 result = true;
-
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } catch (Throwable e) {
+                Log.w("Swipe", e);
             }
             return result;
         }

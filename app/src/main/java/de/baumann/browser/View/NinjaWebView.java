@@ -143,13 +143,14 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.onScrollChangeListener = onScrollChangeListener;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private synchronized void initWebView() {
         setWebViewClient(webViewClient);
         setWebChromeClient(webChromeClient);
         setDownloadListener(downloadListener);
         setOnTouchListener((view, motionEvent) -> {
             gestureDetector.onTouchEvent(motionEvent);
-            return view.performClick();
+            return false;
         });
     }
 
