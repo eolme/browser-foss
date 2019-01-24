@@ -21,6 +21,6 @@ public class NinjaClickHandler extends Handler {
     public void handleMessage(@NonNull Message message) {
         MessageCompat.setAsynchronous(message, true);
         super.handleMessage(message);
-        webView.getBrowserController().onLongPress(message.getData().getString("url"));
+        webView.getBrowserController().onLongPress(message.getData().getString("src"));
     }
 }

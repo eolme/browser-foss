@@ -24,7 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -352,16 +351,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         contentFrame = findViewById(R.id.main_content);
         appBar = findViewById(R.id.appBar);
 
-        appBar.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Rect r = new Rect();
-            appBar.getWindowVisibleDisplayFrame(r);
-            int screenHeight = appBar.getRootView().getHeight();
+        final RelativeLayout rootView = findViewById(R.id.rootView);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
 
-            // r.bottom is the position above soft keypad or device button.
-            // if keypad is shown, the r.bottom is smaller than that before.
-            int keypadHeight = screenHeight - r.bottom;
-
-            if (keypadHeight > screenHeight * 0.15) {
+            if (heightDiff > 100) {
                 omniboxTitle.setVisibility(View.GONE);
             } else {
                 omniboxTitle.setVisibility(View.VISIBLE);
@@ -2620,6 +2614,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     editTitle.setHint(R.string.dialog_title_hint);
                     editTitle.setText(HelperUnit.fileName(ninjaWebView.getUrl()));
 
+                    String urlExtension = url.substring(url.lastIndexOf("."));
+                    if(urlExtension.length() <= 8) {
+                        editExtension.setText(urlExtension);
+                    }
+
                     builder.setView(dialogView1);
                     builder.setTitle(R.string.menu_edit);
                     builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
@@ -2915,7 +2914,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         bottomSheetDialog.setContentView(dialogView);
         bottomSheetDialog.show();
     }
-
 
     private void showListMenu(@NonNull Adapter_Record adapterRecord, @NonNull List<Record> recordList, int location) {
         final Record record = recordList.get(location);
