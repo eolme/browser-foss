@@ -11,7 +11,7 @@
     <string name="album_title_home">Home</string>
     <string name="album_title_files">Files</string>
     <string name="album_untitled"> </string>
-    <string name="notification_content_holderTitle">Opened tabs …</string>
+    <string name="notification_content_holderTitle">Opened tabs…</string>
     <string name="notification_content_holder">… Click to View Pages</string>
     <string name="search_hint">Search</string>
 
@@ -33,7 +33,7 @@
     <string name="main_menu_new_tab">New tab (background)</string>
     <string name="main_menu_new_tabOpen">New tab (foreground)</string>
     <string name="main_omnibox_input_hint">Search or type URL</string>
-    <string name="menu_open_with">Open link with …</string>
+    <string name="menu_open_with">Open link with…</string>
 
     <string name="menu_share">Share</string>
     <string name="menu_quit">Quit</string>
@@ -43,8 +43,8 @@
     <string name="menu_closeTab">Close tab</string>
     <string name="menu_download">Open downloads</string>
     <string name="menu_fav">Set as start site</string>
-    <string name="menu_sort">Sort by …</string>
-    <string name="menu_filter">Filter by color …</string>
+    <string name="menu_sort">Sort by…</string>
+    <string name="menu_filter">Filter by color…</string>
     <string name="menu_blank">Blank start site</string>
 
     <string name="menu_share_screenshot">Share screenshot</string>
@@ -53,7 +53,7 @@
     <string name="menu_save_screenshot">Save screenshot</string>
     <string name="menu_save_home">Save at Home</string>
     <string name="menu_save_bookmark">Save as bookmark</string>
-    <string name="menu_save_as">Save as …</string>
+    <string name="menu_save_as">Save as…</string>
     <string name="menu_save_pdf">Save as PDF</string>
     <string name="menu_share_pdf">Share PDF</string>
     <string name="menu_share_pdfToast">Complete. Open file manager to share?</string>
@@ -79,9 +79,8 @@
     <string name="dialog_sortName">Sort by name</string>
     <string name="dialog_sortIcon">Sort by icon</string>
 
-    <string name="dialog_icon_title">Choose an icon …</string>
-    <string name="dialog_icon_hint">You can also filter your bookmarks, by long pressing the bookmark icon. To reset
-        filters just press the icon once again.</string>
+    <string name="dialog_icon_title">Choose an icon</string>
+    <string name="dialog_icon_hint">You can also filter your bookmarks, by long pressing the bookmark icon. To reset filters just press the icon once again.</string>
 
     <!-- Settings -->
     <string name="setting_label">Settings</string>
@@ -120,18 +119,15 @@
     <string name="setting_title_save_data">Request \'Save Data\'</string>
     <string name="setting_summary_save_data">Tell websites that you would prefer to save data. Supported websites will load faster.</string>
 
-
     <!-- Browser start -->
     <string name="setting_title_images">Images</string>
     <string name="setting_summary_images">Enable Network images. Disabling could be useful to save mobile data and to load
     websites faster.</string>
     <string name="setting_title_cookie">Cookies</string>
     <string name="setting_summary_cookie_delete">If enabled, all cookies will be deleted. Also the Cookies of trusted websites.</string>
-    <string name="setting_summary_cookie">Enable Cookies. Cookies are small text files, which are stored on your device. Websites
-    use them for example to store user settings (for example search settings). But they could also be used to collect personal
-        user data. Third party cookies (they collect user data for advertising) are always disabled.</string>
+    <string name="setting_summary_cookie">Enable Cookies. Third party cookies (they collect user data for advertising) are always disabled.</string>
     <string name="setting_title_whitelistCookie">Cookie whitelist</string>
-    <string name="setting_summary_whitelistCookie">If you disable Cookies, you can use this whitelist to allow sites you
+    <string name="setting_summary_whitelistCookie">If you disable Cookies, you can us e this whitelist to allow sites you
         trust to use save cookies.</string>
 
     <string name="setting_title_javascript">JavaScript</string>
@@ -153,7 +149,6 @@
     <string name="setting_title_history">History</string>
     <string name="setting_summary_history">Save the history of visited websites.</string>
 
-
     <!-- Browser clear -->
     <string name="clear_summary">All files will be exported to the \"Documents\" directory of your sd-card. Each export will overwrite the
         old one. To restore there must be a file with the right name in the directory.</string>
@@ -168,14 +163,12 @@
     <string name="clear_title_deleteDatabase">Delete database</string>
     <string name="clear_summary_deleteDatabase">Delete the whole database (Startpage, bookmarks, history and all whitelists).</string>
 
-
     <!-- App setting -->
     <string name="setting_title_app">App Settings</string>
     <string name="setting_title_ui">Behavior/UI</string>
     <string name="setting_title_data">Backup</string>
     <string name="setting_summary_ui">Change the behavior and ui of the app to suit your preferences.</string>
     <string name="setting_summary_data">Import and export several app data (whitelists, bookmarks).</string>
-
 
     <!-- App behavior -->
     <string name="setting_title_hideToolbar">Hide toolbar</string>
@@ -221,7 +214,6 @@
     <string name="setting_gestures_use_title">Use gestures</string>
     <string name="setting_gestures_use_summary">Use gestures on the toolbar and the \"Navigation button\".</string>
 
-
     <!-- gestures -->
     <string name="setting_title_toolbar">Toolbar</string>
     <string name="setting_gesture_up">Swipe up</string>
@@ -240,19 +232,19 @@
     <string name="setting_gesture_10">Close tab</string>
 
     <!-- Data -->
-    <string name="export_bookmarks">export_bookmarks</string>
+    <string name="export_bookmarks" translatable="false">export_bookmarks</string>
 
     <string name="setting_title_export_whitelist">Export AdBlock whitelist</string>
     <string name="setting_title_import_whitelist">Import AdBlock whitelist</string>
-    <string name="export_whitelistAdBlock">export_whitelist_AdBlock</string>
+    <string name="export_whitelistAdBlock" translatable="false">export_whitelist_AdBlock</string>
 
     <string name="setting_title_export_whitelistJS">Export JavaScript whitelist</string>
     <string name="setting_title_import_whitelistJS">Import JavaScript whitelist</string>
-    <string name="export_whitelistJS">export_whitelist_Javascript</string>
+    <string name="export_whitelistJS" translatable="false">export_whitelist_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">Export Cookie whitelist</string>
     <string name="setting_title_import_whitelistCookie">Import Cookie whitelist</string>
-    <string name="export_whitelistCookie">export_whitelist_Cookie</string>
+    <string name="export_whitelistCookie" translatable="false">export_whitelist_Cookie</string>
 
     <string name="setting_title_export_database">Export database</string>
     <string name="setting_title_import_database">Import database</string>
@@ -260,7 +252,6 @@
         sd-card.</string>
     <string name="title_database">Database</string>
     <string name="hint_database">This will delete all your current settings and data. Will you proceed?</string>
-
 
     <!-- Others setting -->
     <string name="setting_title_others">Others</string>
@@ -299,7 +290,7 @@
     <string name="toast_titleConfirm_paste">Copy data to clipboard?</string>
     <string name="toast_titleConfirm_pasteUN">Username</string>
     <string name="toast_titleConfirm_pastePW">Password</string>
-    <string name="toast_error">Uuups. Something went wrong.</string>
+    <string name="toast_error">Oops. Something went wrong.</string>
     <string name="toast_newTitle">Entry already exists. Please enter new title.</string>
     <string name="toast_edit_successful">Successfully saved</string>
     <string name="toast_webview_forward">Can\'t load next site</string>
@@ -321,7 +312,6 @@
         connection (\"https\")?</string>
     <string name="toast_backup">Backup data? This will overwrite the old backup.</string>
     <string name="toast_fav">Successfully set as start site.</string>
-
 
     <!-- Whitelist -->
     <string name="whitelist_menu_clear">Clear</string>

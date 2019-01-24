@@ -224,19 +224,15 @@
 
 
     <!-- Data -->
-    <string name="export_bookmarks">export_bookmarks</string>
 
     <string name="setting_title_export_whitelist">Eksportuj białą listę AdBlock</string>
     <string name="setting_title_import_whitelist">Importuj białą listę AdBlock</string>
-    <string name="export_whitelistAdBlock">export_whitelist_AdBlock</string>
 
     <string name="setting_title_export_whitelistJS">Eksportuj białą listę JavaScript</string>
     <string name="setting_title_import_whitelistJS">Importuj białą listę JavaScript</string>
-    <string name="export_whitelistJS">export_whitelist_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">Eksportuj białą listę ciasteczek</string>
     <string name="setting_title_import_whitelistCookie">Importuj białą listę ciasteczek</string>
-    <string name="export_whitelistCookie">export_whitelist_Cookie</string>
 
     <string name="setting_title_export_database">Eksportuj bazę danych</string>
     <string name="setting_title_import_database">Importuj bazę danych</string>

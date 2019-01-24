@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="changelog_title">Changelog</string>
+    <string name="changelog_title">Список изменений</string>
     <string name="changelog_dialog">
-        &lt;i>Project site: https://github.com/scoute-dich/Browser&lt;br>
-        Changelog: https://github.com/scoute-dich/browser/blob/master/CHANGELOG.md&lt;/i>&lt;br>&lt;br>
+        &lt;i>Сайт проекта: https://github.com/scoute-dich/Browser&lt;br>
+        Список изменений: https://github.com/scoute-dich/browser/blob/master/CHANGELOG.md&lt;/i>&lt;br>&lt;br>
 
         &lt;b>Version: 6.2&lt;/b>&lt;br>
         \u25AA new: advanced gesture settings&lt;br>
@@ -12,35 +12,40 @@
         \u25AA fix: light settings theme
     </string>
 
-    <string name="overview_title">Overview</string>
-    <string name="overview_dialog">Here you can access all opened tabs and your data: saved sites on the startpage, bookmarks and history.
-        In the settings you can decide which content will be shown at start.</string>
+    <string name="overview_title">Обзор</string>
+    <string name="overview_dialog">Здесь вы можете получить доступ ко всем открытым вкладкам и вашим
+        данным: сохраненные сайты на стартовой странице, закладки и история. В настройках вы можете
+        решить, какой контент будет отображаться при запуске.</string>
 
-    <string name="startSite_title">Start site</string>
-    <string name="startSite_dialog">Long press any saved bookmark to set it as start site. This site will always load on start
-        or when you open a new tab. You can also set an blank start page via the bookmark menu.</string>
+    <string name="startSite_title">Главная страница</string>
+    <string name="startSite_dialog">Удерживайте любую сохраненную закладку, чтобы установить ее
+        в качестве главной страници. Этот сайт всегда будет загружаться при запуске или когда вы
+        открываете новую вкладку. Вы также можете установить пустую стартовую страницу через меню закладок.</string>
 
-    <string name="gestures_title">Gestures</string>
-    <string name="gestures_dialog">On the toolbar and the Navigation button you can use gestures:   ▪ Swipe up/down → scroll to top/bottom;   ▪ Swipe left/right → navigate back/forward;   ▪ Tap → open the menu;   ▪ Long press → open Fast toggle dialog   You can configure gestures in the settings.</string>
+    <string name="gestures_title">Жесты</string>
+    <string name="gestures_dialog">На панели инструментов и на \"кнопке навигации\" можно использовать жесты:
+        ▪ Проведите пальцем вверх/вниз → прокрутка вверх/вниз;
+        ▪ Проведите пальцем влево/вправо → перейти назад/вперед;
+        ▪ Нажмите → открыть меню;
+        ▪ Длительное нажатие → открыть диалог быстрого переключения
+        Жесты можно изменить в настройках.</string>
 
-    <string name="fastToggle_title">Fast toggle</string>
-    <string name="fastToggle_dialog">If you long press the \"menu\" or the \"Navigation button\" the \"Fast toggle dialog\"
-        will open. Here you can change some important settings without leaving the current website. You can also add websites
-        to your whitelist for AdBlocker, JavaScript or Cookies..</string>
+    <string name="fastToggle_title">Быстрое переключение</string>
+    <string name="fastToggle_dialog">Если вы длительно нажимаете \"меню\" или \"Кнопку навигации\",
+        откроется \" быстрый диалог переключения\". Здесь вы можете изменить некоторые важные настройки,
+        не покидая текущий сайт. Вы также можете добавить веб-сайты в белый список для AdBlocker, JavaScript или Cookies.</string>
 
-    <string name="menu_title">Menu</string>
-    <string name="menu_dialog">Manage your tabs, share or save content, handle the current tab or use some features: just try it.
-        The menu can be dismissed, like all other notifications, by clicking back, clicking outside the menu or simply be
-        swiping the menu down.</string>
+    <string name="menu_title">Меню</string>
+    <string name="menu_dialog">Управляйте своими вкладками, делитесь или сохраняйте контент, обрабатывайте
+        текущую вкладку или используйте некоторые функции: просто попробуйте. Меню можно отклонить, как и
+        все другие уведомления, нажав назад, нажав вне меню или просто провести меню вниз.</string>
 
-    <string name="not_title">Notifications</string>
-    <string name="not_dialog">Notifications are displayed on the bottom of the screen. They can also be dismissed like the
-        menus.</string>
+    <string name="not_title">Уведомления</string>
+    <string name="not_dialog">Уведомления показаны в нижней части экрана. Они могут также быть отклонены как и меню.</string>
 
-    <string name="settings_dialog">There are even more options in the settings. Try it out!</string>
+    <string name="settings_dialog">В настройках есть еще больше параметров. Попробуйте!</string>
 
-
-    <string name="license_title">Copyright © 2017  by Gaukler Faun</string>
+    <string name="license_title">Copyright © 2017 by Gaukler Faun</string>
     <string name="license_dialog">
         &lt;i>For more information visit the project site on Github: https://github.com/scoute-dich/Browser&lt;/i>&lt;br>&lt;br>
 

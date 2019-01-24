@@ -2,18 +2,8 @@
 <resources>
 
     <!-- General -->
-    <string name="sp_ad_block">SP_AD_BLOCK_9</string>
-    <string name="sp_cookies">SP_COOKIES_9</string>
-    <string name="sp_images">SP_IMÁGENES_9</string>
-    <string name="sp_javascript">SP_JAVASCRIPT_9</string>
-    <string name="sp_location">SP_UBICACIÓN_9</string>
 
     <!-- Clear -->
-    <string name="sp_clear_quit">SP_LIMPIA_SALIR_9</string>
-    <string name="sp_clear_cache">SP_LIMPIA_CACHE_9</string>
-    <string name="sp_clear_cookie">SP_LIMPIA_COOKIE_9</string>
-    <string name="sp_clear_history">SP_LIMPIA_HISTORIA_9</string>
-
 
 
     <!-- App -->
@@ -187,19 +177,15 @@
 
 
     <!-- Data -->
-    <string name="export_bookmarks">exportar_marcadores</string>
 
     <string name="setting_title_export_whitelist">Exportar lista blanca AdBlock</string>
     <string name="setting_title_import_whitelist">Importar lista blanca AdBlock</string>
-    <string name="export_whitelistAdBlock">exportar_listablanca_Adblock</string>
 
     <string name="setting_title_export_whitelistJS">Exportar lista blanca JavaScript</string>
     <string name="setting_title_import_whitelistJS">Importar lista blanca JavaScript</string>
-    <string name="export_whitelistJS">exportar_listablanca_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">Exportar lista blanca Cookie</string>
     <string name="setting_title_import_whitelistCookie">Importar lista blanca Cookie</string>
-    <string name="export_whitelistCookie">exportar_listablanca_Cookie</string>
 
     <string name="setting_title_export_database">Exportar base de datos</string>
     <string name="setting_title_import_database">Importar base de datos</string>

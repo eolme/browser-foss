@@ -244,19 +244,15 @@
     <string name="setting_gesture_10">Tab schließen</string>
 
     <!-- Data -->
-    <string name="export_bookmarks">export_bookmarks</string>
 
     <string name="setting_title_export_whitelist">AdBlock Ausnahmen sichern</string>
     <string name="setting_title_import_whitelist">AdBlock Ausnahmen wiederherstellen</string>
-    <string name="export_whitelistAdBlock">export_whitelist_AdBlock</string>
 
     <string name="setting_title_export_whitelistJS">JavaScript Ausnahmen sichern</string>
     <string name="setting_title_import_whitelistJS">JavaScript Ausnahmen wiederherstellen</string>
-    <string name="export_whitelistJS">export_whitelist_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">Cookie Ausnahmen sichern</string>
     <string name="setting_title_import_whitelistCookie">Cookie Ausnahmen wiederherstellen</string>
-    <string name="export_whitelistCookie">export_whitelist_Cookie</string>
 
     <string name="setting_title_export_database">Datenbank sichern</string>
     <string name="setting_title_import_database">Datenbank wiederherstellen</string>

@@ -180,19 +180,15 @@
 
 
     <!-- Data -->
-    <string name="export_bookmarks">export_bookmarks</string>
 
     <string name="setting_title_export_whitelist">匯出 AdBlock 白名單</string>
     <string name="setting_title_import_whitelist">匯入 AdBlock 白名單</string>
-    <string name="export_whitelistAdBlock">export_whitelist_AdBlock</string>
 
     <string name="setting_title_export_whitelistJS">匯出 JavaScript 白名單</string>
     <string name="setting_title_import_whitelistJS">匯入 JavaScript 白名單</string>
-    <string name="export_whitelistJS">export_whitelist_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">匯出 Cookie 白名單</string>
     <string name="setting_title_import_whitelistCookie">匯入 Cookie 白名單</string>
-    <string name="export_whitelistCookie">export_whitelist_Cookie</string>
 
     <string name="setting_title_export_database">匯出資料庫</string>
     <string name="setting_title_import_database">匯入資料庫</string>

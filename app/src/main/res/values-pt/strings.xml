@@ -232,19 +232,15 @@
     <string name="setting_gesture_10">Fechar separador</string>
 
     <!-- Data -->
-    <string name="export_bookmarks">export_bookmarks</string>
 
     <string name="setting_title_export_whitelist">Exportar lista branca AdBlock</string>
     <string name="setting_title_import_whitelist">Importar lista branca AdBlock</string>
-    <string name="export_whitelistAdBlock">export_whitelist_AdBlock</string>
 
     <string name="setting_title_export_whitelistJS">Exportar lista branca JavaScript</string>
     <string name="setting_title_import_whitelistJS">Importar lista branca JavaScript</string>
-    <string name="export_whitelistJS">export_whitelist_Javascript</string>
 
     <string name="setting_title_export_whitelistCookie">Exportar lista branca de cookies</string>
     <string name="setting_title_import_whitelistCookie">Importar lista branca de cookies</string>
-    <string name="export_whitelistCookie">export_whitelist_Cookie</string>
 
     <string name="setting_title_export_database">Exportar base de dados</string>
     <string name="setting_title_import_database">Importar base de dados</string>
