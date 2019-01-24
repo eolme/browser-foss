@@ -3,83 +3,80 @@ package de.baumann.browser.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.support.design.widget.BottomSheetDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import de.baumann.browser.Activity.Settings_ClearActivity;
 import de.baumann.browser.Activity.Settings_DataActivity;
 import de.baumann.browser.Activity.Settings_GestureActivity;
 import de.baumann.browser.Activity.Settings_StartActivity;
 import de.baumann.browser.Activity.Settings_UIActivity;
-import de.baumann.browser.Unit.HelperUnit;
 import de.baumann.browser.Ninja.R;
+import de.baumann.browser.Unit.HelperUnit;
 
-public class Fragment_settings extends PreferenceFragment {
-
+public class Fragment_settings extends PreferenceFragmentCompat {
+    
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preference_setting);
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        switch (preference.getTitleRes()) {
-
-            case R.string.setting_title_data:
-                Intent dataControl = new Intent(getActivity(), Settings_DataActivity.class);
-                getActivity().startActivity(dataControl);
-                break;
-            case R.string.setting_title_ui:
-                Intent uiControl = new Intent(getActivity(), Settings_UIActivity.class);
-                getActivity().startActivity(uiControl);
-                break;
-            case R.string.setting_gestures:
-                Intent gestureControl = new Intent(getActivity(), Settings_GestureActivity.class);
-                getActivity().startActivity(gestureControl);
-                break;
-            case R.string.setting_title_start_control:
-                Intent startControl = new Intent(getActivity(), Settings_StartActivity.class);
-                getActivity().startActivity(startControl);
-                break;
-            case R.string.setting_title_clear_control:
-                Intent clearControl = new Intent(getActivity(), Settings_ClearActivity.class);
-                getActivity().startActivity(clearControl);
-                break;
-            case R.string.setting_title_license:
+    public boolean onPreferenceTreeClick(@NonNull Preference preference) {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            CharSequence i = preference.getTitle();
+            if (getString(R.string.setting_title_data).contentEquals(i)) {
+                Intent dataControl = new Intent(activity, Settings_DataActivity.class);
+                activity.startActivity(dataControl);
+            } else if (getString(R.string.setting_title_ui).contentEquals(i)) {
+                Intent uiControl = new Intent(activity, Settings_UIActivity.class);
+                activity.startActivity(uiControl);
+            } else if (getString(R.string.setting_gestures).contentEquals(i)) {
+                Intent gestureControl = new Intent(activity, Settings_GestureActivity.class);
+                activity.startActivity(gestureControl);
+            } else if (getString(R.string.setting_title_start_control).contentEquals(i)) {
+                Intent startControl = new Intent(activity, Settings_StartActivity.class);
+                activity.startActivity(startControl);
+            } else if (getString(R.string.setting_title_clear_control).contentEquals(i)) {
+                Intent clearControl = new Intent(activity, Settings_ClearActivity.class);
+                activity.startActivity(clearControl);
+            } else if (getString(R.string.setting_title_license).contentEquals(i)) {
                 showLicenseDialog(getString(R.string.license_title), getString(R.string.license_dialog));
-                break;
-            case R.string.setting_title_community:
+            } else if (getString(R.string.setting_title_community).contentEquals(i)) {
                 showLicenseDialog(getString(R.string.setting_title_community), getString(R.string.cont_dialog));
-                break;
-            case R.string.changelog_title:
+            } else if (getString(R.string.changelog_title).contentEquals(i)) {
                 showChangelogDialog();
-                break;
-            case R.string.setting_title_appSettings:
+            } else if (getString(R.string.setting_title_appSettings).contentEquals(i)) {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                 intent.setData(uri);
-                getActivity().startActivity(intent);
-                break;
-
-            default:
-                break;
+                activity.startActivity(intent);
+            }
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 
     private void showLicenseDialog(String title, String text) {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
-        View dialogView = View.inflate(getActivity(), R.layout.dialog_text, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(activity);
+        View dialogView = View.inflate(activity, R.layout.dialog_text, null);
 
         TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
         dialog_title.setText(title);
@@ -89,12 +86,7 @@ public class Fragment_settings extends PreferenceFragment {
         dialog_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        fab.setOnClickListener(v -> dialog.cancel());
 
         ImageButton fab_help = dialogView.findViewById(R.id.floatButton_help);
         fab_help.setVisibility(View.GONE);
@@ -107,9 +99,13 @@ public class Fragment_settings extends PreferenceFragment {
     }
 
     private void showChangelogDialog() {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
-        View dialogView = View.inflate(getActivity(), R.layout.dialog_text, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(activity);
+        View dialogView = View.inflate(activity, R.layout.dialog_text, null);
 
         TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
         dialog_title.setText(R.string.changelog_title);
@@ -119,12 +115,7 @@ public class Fragment_settings extends PreferenceFragment {
         dialog_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+        fab.setOnClickListener(v -> dialog.cancel());
 
         ImageButton fab_help = dialogView.findViewById(R.id.floatButton_help);
         fab_help.setVisibility(View.GONE);

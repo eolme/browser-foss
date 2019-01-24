@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.preference.Preference android:summary="@string/clear_summary" />
 
-    <Preference android:summary="@string/clear_summary" />
-
-    <PreferenceCategory android:title="@string/title_database">
-        <Preference
+    <androidx.preference.PreferenceCategory android:title="@string/title_database">
+        <androidx.preference.Preference
             android:title="@string/setting_title_export_database"
             android:summary="@string/setting_summary_export_database"/>
-        <Preference
-            android:title="@string/setting_title_import_database"/>
-    </PreferenceCategory>
+        <androidx.preference.Preference android:title="@string/setting_title_import_database"/>
+    </androidx.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/setting_title_adblock">
-        <Preference android:title="@string/setting_title_export_whitelist" />
-        <Preference android:title="@string/setting_title_import_whitelist" />
-    </PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/setting_title_adblock">
+        <androidx.preference.Preference android:title="@string/setting_title_export_whitelist" />
+        <androidx.preference.Preference android:title="@string/setting_title_import_whitelist" />
+    </androidx.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/setting_title_javascript">
-        <Preference android:title="@string/setting_title_export_whitelistJS" />
-        <Preference android:title="@string/setting_title_import_whitelistJS" />
-    </PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/setting_title_javascript">
+        <androidx.preference.Preference android:title="@string/setting_title_export_whitelistJS" />
+        <androidx.preference.Preference android:title="@string/setting_title_import_whitelistJS" />
+    </androidx.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/setting_title_cookie">
-        <Preference android:title="@string/setting_title_export_whitelistCookie" />
-        <Preference android:title="@string/setting_title_import_whitelistCookie" />
-    </PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/setting_title_cookie">
+        <androidx.preference.Preference android:title="@string/setting_title_export_whitelistCookie" />
+        <androidx.preference.Preference android:title="@string/setting_title_import_whitelistCookie" />
+    </androidx.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

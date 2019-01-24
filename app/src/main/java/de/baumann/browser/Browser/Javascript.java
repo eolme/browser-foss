@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,38 +21,10 @@ public class Javascript {
     private static final String FILE = "javaHosts.txt";
     private static final Set<String> hostsJS = new HashSet<>();
     private static final List<String> whitelistJS = new ArrayList<>();
-    private static final Locale locale = Locale.getDefault();
-
-    private static void loadHosts(final Context context) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AssetManager manager = context.getAssets();
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(manager.open(FILE)));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        hostsJS.add(line.toLowerCase(locale));
-                    }
-                } catch (IOException i) {
-                    Log.w("Browser", "Error loading hosts");
-                }
-            }
-        });
-        thread.start();
-    }
-
-    private synchronized static void loadDomains(Context context) {
-        RecordAction action = new RecordAction(context);
-        action.open(false);
-        whitelistJS.clear();
-        whitelistJS.addAll(action.listDomainsJS());
-        action.close();
-    }
-
+    @NonNull
     private final Context context;
 
-    public Javascript(Context context) {
+    public Javascript(@NonNull Context context) {
         this.context = context;
 
         if (hostsJS.isEmpty()) {
@@ -59,7 +33,31 @@ public class Javascript {
         loadDomains(context);
     }
 
-    public boolean isWhite(String url) {
+    private static void loadHosts(@NonNull Context context) {
+        Thread thread = new Thread(() -> {
+            AssetManager manager = context.getAssets();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(manager.open(FILE)));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    hostsJS.add(line.toLowerCase(Locale.getDefault()));
+                }
+            } catch (IOException i) {
+                Log.w("Browser", "Error loading hosts");
+            }
+        });
+        thread.start();
+    }
+
+    private synchronized static void loadDomains(@NonNull Context context) {
+        RecordAction action = new RecordAction(context);
+        action.open(false);
+        whitelistJS.clear();
+        whitelistJS.addAll(action.listDomainsJS());
+        action.close();
+    }
+
+    public boolean isWhite(@NonNull String url) {
         for (String domain : whitelistJS) {
             if (url.contains(domain)) {
                 return true;
@@ -68,7 +66,7 @@ public class Javascript {
         return false;
     }
 
-    public synchronized void addDomain(String domain) {
+    public synchronized void addDomain(@NonNull String domain) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.addDomainJS(domain);
@@ -76,7 +74,7 @@ public class Javascript {
         whitelistJS.add(domain);
     }
 
-    public synchronized void removeDomain(String domain) {
+    public synchronized void removeDomain(@NonNull String domain) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.deleteDomainJS(domain);

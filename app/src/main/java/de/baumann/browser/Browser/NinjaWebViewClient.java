@@ -1,21 +1,14 @@
 package de.baumann.browser.Browser;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Build;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -25,9 +18,17 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.os.MessageCompat;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
 import java.net.URISyntaxException;
@@ -37,17 +38,23 @@ import de.baumann.browser.Database.RecordAction;
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 import de.baumann.browser.Unit.IntentUnit;
+import de.baumann.browser.Unit.LayoutUnit;
 import de.baumann.browser.View.NinjaToast;
 import de.baumann.browser.View.NinjaWebView;
 
 import static android.content.ContentValues.TAG;
 
 public class NinjaWebViewClient extends WebViewClient {
+    @NonNull
     private final NinjaWebView ninjaWebView;
+    @NonNull
     private final Context context;
+    @NonNull
     private final SharedPreferences sp;
 
+    @NonNull
     private final AdBlock adBlock;
+    @NonNull
     private final Cookie cookie;
 
     private boolean white;
@@ -60,7 +67,7 @@ public class NinjaWebViewClient extends WebViewClient {
         this.enable = enable;
     }
 
-    public NinjaWebViewClient(NinjaWebView ninjaWebView) {
+    public NinjaWebViewClient(@NonNull NinjaWebView ninjaWebView) {
         super();
         this.ninjaWebView = ninjaWebView;
         this.context = ninjaWebView.getContext();
@@ -72,28 +79,30 @@ public class NinjaWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+    public void onPageStarted(@NonNull WebView view, @NonNull String url, @NonNull Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
 
-        if (view.getTitle() == null || view.getTitle().isEmpty()) {
+        String title = view.getTitle();
+        if (title == null || title.isEmpty()) {
             ninjaWebView.update(context.getString(R.string.album_untitled), url);
         } else {
-            ninjaWebView.update(view.getTitle(), url);
+            ninjaWebView.update(title, url);
         }
     }
 
     @Override
-    public void onPageFinished(WebView view, String url) {
+    public void onPageFinished(@NonNull WebView view, @NonNull String url) {
         super.onPageFinished(view, url);
 
         if (!ninjaWebView.getSettings().getLoadsImagesAutomatically()) {
             ninjaWebView.getSettings().setLoadsImagesAutomatically(true);
         }
 
-        if (view.getTitle() == null || view.getTitle().isEmpty()) {
+        String title = view.getTitle();
+        if (title == null || title.isEmpty()) {
             ninjaWebView.update(context.getString(R.string.album_untitled), url);
         } else {
-            ninjaWebView.update(view.getTitle(), url);
+            ninjaWebView.update(title, url);
         }
 
         if (sp.getBoolean("saveHistory", true)) {
@@ -119,22 +128,19 @@ public class NinjaWebViewClient extends WebViewClient {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull String url) {
         final Uri uri = Uri.parse(url);
         return handleUri(view, uri);
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull WebResourceRequest request) {
         final Uri uri = request.getUrl();
         return handleUri(view, uri);
     }
 
-    private boolean handleUri(WebView webView, final Uri uri) {
-
+    private boolean handleUri(@NonNull WebView webView, @NonNull Uri uri) {
         Log.i(TAG, "Uri =" + uri);
         final String url = uri.toString();
         // Based on some condition you need to determine if you are going to load the url
@@ -162,7 +168,7 @@ public class NinjaWebViewClient extends WebViewClient {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     try {
                         context.startActivity(intent);
-                    } catch (Exception e) {
+                    } catch (Throwable e) {
                         NinjaToast.show(context, R.string.toast_load_error);
                     }
                     return true;
@@ -189,7 +195,7 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     @SuppressWarnings("deprecation")
-    public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+    public WebResourceResponse shouldInterceptRequest(@NonNull WebView view, @NonNull String url) {
         if (enable && !white && adBlock.isAd(url)) {
             return new WebResourceResponse(
                     BrowserUnit.MIME_TYPE_TEXT_PLAIN,
@@ -199,7 +205,6 @@ public class NinjaWebViewClient extends WebViewClient {
         }
 
         if (!sp.getBoolean(context.getString(R.string.sp_cookies), true)) {
-
             if (cookie.isWhite(url)) {
                 CookieManager manager = CookieManager.getInstance();
                 manager.getCookie(url);
@@ -224,7 +229,6 @@ public class NinjaWebViewClient extends WebViewClient {
         }
 
         if (!sp.getBoolean(context.getString(R.string.sp_cookies), true)) {
-
             if (cookie.isWhite(request.getUrl().toString())) {
                 CookieManager manager = CookieManager.getInstance();
                 manager.getCookie(request.getUrl().toString());
@@ -239,102 +243,86 @@ public class NinjaWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onFormResubmission(WebView view, @NonNull final Message doNotResend, final Message resend) {
+    public void onFormResubmission(@NonNull WebView view, @NonNull Message doNotResend, @NonNull Message resend) {
         Context holder = IntentUnit.getContext();
-        if (!(holder instanceof Activity)) {
+        if (!(holder instanceof AppCompatActivity)) {
             return;
         }
 
         final BottomSheetDialog dialog = new BottomSheetDialog(holder);
         View dialogView = View.inflate(holder, R.layout.dialog_action, null);
-        TextView textView = dialogView.findViewById(R.id.dialog_text);
+        AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
         textView.setText(R.string.dialog_content_resubmission);
-        Button action_ok = dialogView.findViewById(R.id.action_ok);
-        action_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resend.sendToTarget();
-                dialog.cancel();
-            }
+        MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+        action_ok.setOnClickListener(view1 -> {
+            MessageCompat.setAsynchronous(resend, true);
+            resend.sendToTarget();
+            dialog.cancel();
         });
-        Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-        action_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doNotResend.sendToTarget();
-                dialog.cancel();
-            }
+        MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+        action_cancel.setOnClickListener(view12 -> {
+            doNotResend.sendToTarget();
+            dialog.cancel();
         });
         dialog.setContentView(dialogView);
         dialog.show();
     }
 
     @Override
-    public void onReceivedSslError(WebView view, @NonNull final SslErrorHandler handler, SslError error) {
+    public void onReceivedSslError(@NonNull WebView view, @NonNull SslErrorHandler handler, @NonNull SslError error) {
         Context holder = IntentUnit.getContext();
-        if (!(holder instanceof Activity)) {
+        if (!(holder instanceof AppCompatActivity)) {
             return;
         }
 
         final BottomSheetDialog dialog = new BottomSheetDialog(holder);
         View dialogView = View.inflate(holder, R.layout.dialog_action, null);
-        TextView textView = dialogView.findViewById(R.id.dialog_text);
+        AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
         textView.setText(R.string.dialog_content_ssl_error);
-        Button action_ok = dialogView.findViewById(R.id.action_ok);
-        action_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handler.proceed();
-                dialog.cancel();
-            }
+        MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+        action_ok.setOnClickListener(view1 -> {
+            handler.proceed();
+            dialog.cancel();
         });
-        Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-        action_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handler.cancel();
-                dialog.cancel();
-            }
+        MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+        action_cancel.setOnClickListener(view12 -> {
+            handler.cancel();
+            dialog.cancel();
         });
         dialog.setContentView(dialogView);
         dialog.show();
     }
 
     @Override
-    public void onReceivedHttpAuthRequest(WebView view, @NonNull final HttpAuthHandler handler, String host, String realm) {
+    public void onReceivedHttpAuthRequest(@NonNull WebView view, @NonNull HttpAuthHandler handler,
+                                          @NonNull String host, @NonNull String realm) {
         Context holder = IntentUnit.getContext();
-        if (!(holder instanceof Activity)) {
+        if (!(holder instanceof AppCompatActivity)) {
             return;
         }
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(holder);
+        AlertDialog.Builder builder = new AlertDialog.Builder(holder);
         View dialogView = View.inflate(holder, R.layout.dialog_edit_bookmark, null);
 
-        final EditText pass_userNameET = dialogView.findViewById(R.id.pass_userName);
-        final EditText pass_userPWET = dialogView.findViewById(R.id.pass_userPW);
+        final AppCompatEditText pass_userNameET = dialogView.findViewById(R.id.pass_userName);
+        final AppCompatEditText pass_userPWET = dialogView.findViewById(R.id.pass_userPW);
         TextInputLayout login_title = dialogView.findViewById(R.id.login_title);
         login_title.setVisibility(View.GONE);
 
         builder.setView(dialogView);
         builder.setTitle(R.string.dialog_title_sign_in);
-        builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String user = pass_userNameET.getText().toString().trim();
-                String pass = pass_userPWET.getText().toString().trim();
-                handler.proceed(user, pass);
-                dialog.cancel();
-            }
+        builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
+            String user = LayoutUnit.getText(pass_userNameET);
+            String pass = LayoutUnit.getText(pass_userPWET);
+            handler.proceed(user, pass);
+            dialog.cancel();
         });
-        builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
-                handler.cancel();
-                dialog.cancel();
-            }
+        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> {
+            handler.cancel();
+            dialog.cancel();
         });
 
-        android.support.v7.app.AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 }

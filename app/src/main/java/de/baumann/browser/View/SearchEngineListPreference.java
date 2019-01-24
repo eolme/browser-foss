@@ -1,16 +1,17 @@
 package de.baumann.browser.View;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.ListPreference;
 
 import java.util.Objects;
 
@@ -19,26 +20,31 @@ import de.baumann.browser.Unit.BrowserUnit;
 
 public class SearchEngineListPreference extends ListPreference {
 
-    public SearchEngineListPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
     }
 
-    @Override
-    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
-        super.onPrepareDialogBuilder(builder);
+    public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
 
-        builder.setPositiveButton(R.string.dialog_button_custom, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showEditDialog();
-            }
-        });
+    public SearchEngineListPreference(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SearchEngineListPreference(@NonNull Context context) {
+        this(context, null);
+    }
+
+    private void init() {
+        setPositiveButtonText(R.string.dialog_button_custom);
     }
 
     private void showEditDialog() {
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View dialogView = View.inflate(getContext(), R.layout.dialog_edit_title, null);
 
         final EditText editText = dialogView.findViewById(R.id.dialog_edit);
@@ -50,47 +56,39 @@ public class SearchEngineListPreference extends ListPreference {
 
         builder.setView(dialogView);
         builder.setTitle(R.string.menu_edit);
-        builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
+            String domain = editText.getText().toString().trim();
+            if (domain.isEmpty()) {
+                NinjaToast.show(getContext(), R.string.toast_input_empty);
+            } else if (!BrowserUnit.isURL(domain)) {
+                NinjaToast.show(getContext(), R.string.toast_invalid_domain);
+            } else {
+                sp.edit().putString(getContext().getString(R.string.sp_search_engine), "8").commit();
+                sp.edit().putString(getContext().getString(R.string.sp_search_engine_custom), domain).commit();
 
-            @SuppressLint("ApplySharedPref")
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                String domain = editText.getText().toString().trim();
-                if (domain.isEmpty()) {
-                    NinjaToast.show(getContext(), R.string.toast_input_empty);
-                } else if (!BrowserUnit.isURL(domain)) {
-                    NinjaToast.show(getContext(), R.string.toast_invalid_domain);
-                } else {
-                    sp.edit().putString(getContext().getString(R.string.sp_search_engine), "8").commit();
-                    sp.edit().putString(getContext().getString(R.string.sp_search_engine_custom), domain).commit();
-
-                    hideSoftInput(editText);
-                    dialog.cancel();
-                }
-            }
-        });
-        builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.cancel();
                 hideSoftInput(editText);
+                dialog.cancel();
             }
         });
+        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> {
+            dialog.cancel();
+            hideSoftInput(editText);
+        });
 
-        android.support.v7.app.AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
 
         showSoftInput(editText);
     }
 
-    private void hideSoftInput(View view) {
+    private void hideSoftInput(@NonNull View view) {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void showSoftInput(View view) {
+    private void showSoftInput(@NonNull View view) {
         view.requestFocus();
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;

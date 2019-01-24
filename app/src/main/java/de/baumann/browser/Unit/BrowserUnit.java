@@ -14,8 +14,13 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
-import android.webkit.ValueCallback;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -69,7 +75,8 @@ public class BrowserUnit {
     private static final String URL_PREFIX_GOOGLE_PLUS = "plus.url.google.com/url?q=";
     private static final String URL_SUFFIX_GOOGLE_PLUS = "&rct";
 
-    public static boolean isURL(String url) {
+    @Contract("null -> false")
+    public static boolean isURL(@Nullable String url) {
         if (url == null) {
             return false;
         }
@@ -88,7 +95,7 @@ public class BrowserUnit {
                 + "(.)*"                                                     // 域名 -> www.
                 // + "([0-9a-z_!~*'()-]+\\.)*"                               // 域名 -> www.
                 + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\\."                    // 二级域名
-                + "[a-z]{2,6})"                                              // first level domain -> .com or .museum
+                + "[a-z]{2,24})"                                              // first level domain -> .com or .museum
                 + "(:[0-9]{1,4})?"                                           // 端口 -> :80
                 + "((/?)|"                                                   // a slash isn't required if there is no file name
                 + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
@@ -96,7 +103,8 @@ public class BrowserUnit {
         return pattern.matcher(url).matches();
     }
 
-    public static String queryWrapper(Context context, String query) {
+    @NonNull
+    public static String queryWrapper(@NonNull Context context, @NotNull String query) {
         // Use prefix and suffix to process some special links
         String temp = query.toLowerCase(Locale.getDefault());
         if (temp.contains(URL_PREFIX_GOOGLE_PLAY) && temp.contains(URL_SUFFIX_GOOGLE_PLAY)) {
@@ -154,30 +162,37 @@ public class BrowserUnit {
         }
     }
 
-
-    public static boolean bitmap2File(Context context, Bitmap bitmap, String filename) {
+    public static boolean bitmap2File(@NonNull Context context, @NonNull Bitmap bitmap,
+                                      @NonNull String filename) {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             return false;
         }
 
         return true;
     }
 
-    public static Bitmap file2Bitmap(Context context, String filename) {
+    @Nullable
+    public static Bitmap file2Bitmap(@NonNull Context context, @NonNull String filename) {
         try {
             FileInputStream fileInputStream = context.openFileInput(filename);
             return BitmapFactory.decodeStream(fileInputStream);
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
     }
 
-    public static void download(final Context context, String url, String contentDisposition, String mimeType) {
+    @Contract("null, _, _, _ -> fail")
+    public static void download(@Nullable Context context, @NonNull String url,
+                                @NonNull String contentDisposition, @NonNull String mimeType) {
+        if (context == null) {
+            return;
+        }
+
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String filename = URLUtil.guessFileName(url, contentDisposition, mimeType); // Maybe unexpected filename.
 
@@ -207,7 +222,6 @@ public class BrowserUnit {
                     Toast.makeText(context, R.string.toast_start_download, Toast.LENGTH_SHORT).show();
                 }
             }
-
         } else {
             manager.enqueue(request);
             try {
@@ -218,7 +232,10 @@ public class BrowserUnit {
         }
     }
 
-    public static String screenshot(Context context, Bitmap bitmap, String name) {
+    @Contract("_, null, _ -> null")
+    @Nullable
+    public static String screenshot(@NonNull Context context, @Nullable Bitmap bitmap,
+                                    @Nullable String name) {
         if (bitmap == null) {
             return null;
         }
@@ -247,13 +264,12 @@ public class BrowserUnit {
             sp.edit().putString("screenshot_path", file.getPath()).apply();
 
             return file.getAbsolutePath();
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
     }
 
-    public static void exportBookmarks(Context context) {
-
+    public static void exportBookmarks(@NonNull Context context) {
         String filename = context.getString(R.string.export_bookmarks);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "browser_backup//" + filename + SUFFIX_TXT);
 
@@ -264,14 +280,12 @@ public class BrowserUnit {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
             writer.write(savedKey);
             writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Browser", "Error adding record", e);
-
         }
     }
 
-    public static void importBookmarks(Context context) {
-
+    public static void importBookmarks(@NonNull Context context) {
         String filename = context.getString(R.string.export_bookmarks);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "browser_backup//" + filename + SUFFIX_TXT);
 
@@ -285,13 +299,13 @@ public class BrowserUnit {
                 sp.edit().putString("saved_key", line).apply();
             }
             reader.close();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Browser", "Error adding record", e);
         }
     }
 
-    public static String exportWhitelist(Context context, int i) {
+    @Nullable
+    public static String exportWhitelist(@NonNull Context context, int i) {
         RecordAction action = new RecordAction(context);
         List<String> list;
         String filename;
@@ -325,13 +339,12 @@ public class BrowserUnit {
             }
             writer.close();
             return file.getAbsolutePath();
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
     }
 
-    public static int importWhitelist(Context context) {
-
+    public static int importWhitelist(@NonNull Context context) {
         String filename = context.getString(R.string.export_whitelistAdBlock);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "browser_backup//" + filename + SUFFIX_TXT);
 
@@ -351,15 +364,14 @@ public class BrowserUnit {
             }
             reader.close();
             action.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Browser", "Error reading file", e);
         }
 
         return count;
     }
 
-    public static int importWhitelistJS(Context context) {
-
+    public static int importWhitelistJS(@NonNull Context context) {
         String filename = context.getString(R.string.export_whitelistJS);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "browser_backup//" + filename + SUFFIX_TXT);
 
@@ -379,15 +391,14 @@ public class BrowserUnit {
             }
             reader.close();
             action.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Browser", "Error reading file", e);
         }
 
         return count;
     }
 
-    public static int importWhitelistCookie(Context context) {
-
+    public static int importWhitelistCookie(@NonNull Context context) {
         String filename = context.getString(R.string.export_whitelistCookie);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "browser_backup//" + filename + SUFFIX_TXT);
 
@@ -407,27 +418,27 @@ public class BrowserUnit {
             }
             reader.close();
             action.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.w("Browser", "Error reading file", e);
         }
 
         return count;
     }
 
-    public static void clearHome(Context context) {
+    public static void clearHome(@NonNull Context context) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.clearHome();
         action.close();
     }
 
-    public static void clearCache(Context context) {
+    public static void clearCache(@NonNull Context context) {
         try {
             File dir = context.getCacheDir();
             if (dir != null && dir.isDirectory()) {
                 deleteDir(dir);
             }
-        } catch (Exception exception) {
+        } catch (Throwable a) {
             Log.w("Browser", "Error clearing cache");
         }
     }
@@ -436,21 +447,18 @@ public class BrowserUnit {
     public static void clearCookie() {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.flush();
-        cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-            @Override
-            public void onReceiveValue(Boolean value) {}
+        cookieManager.removeAllCookies(value -> {
         });
     }
 
-    public static void clearHistory(Context context) {
+    public static void clearHistory(@NonNull Context context) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.clearHistory();
         action.close();
     }
 
-    public static void clearIndexedDB (Context context) {
-
+    public static void clearIndexedDB(@NonNull Context context) {
         File data = Environment.getDataDirectory();
 
         String indexedDB = "//data//" + context.getPackageName() + "//app_webview//" + "//IndexedDB";
@@ -463,7 +471,8 @@ public class BrowserUnit {
         BrowserUnit.deleteDir(localStorage_dir);
     }
 
-    public static boolean deleteDir(File dir) {
+    @Contract("null -> false")
+    public static boolean deleteDir(@Nullable File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {

@@ -2,18 +2,23 @@ package de.baumann.browser.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -22,16 +27,16 @@ import de.baumann.browser.Database.RecordAction;
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 import de.baumann.browser.Unit.HelperUnit;
-import de.baumann.browser.View.NinjaToast;
+import de.baumann.browser.Unit.LayoutUnit;
 import de.baumann.browser.View.Adapter_AbBlock;
+import de.baumann.browser.View.NinjaToast;
 
 public class Whitelist_AdBlock extends AppCompatActivity {
     private Adapter_AbBlock adapter;
     private List<String> list;
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -39,7 +44,10 @@ public class Whitelist_AdBlock extends AppCompatActivity {
         setContentView(R.layout.whitelist);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         RecordAction action = new RecordAction(this);
         action.open(false);
@@ -53,30 +61,27 @@ public class Whitelist_AdBlock extends AppCompatActivity {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        Button button = findViewById(R.id.whitelist_add);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editText = findViewById(R.id.whitelist_edit);
-                String domain = editText.getText().toString().trim();
-                if (domain.isEmpty()) {
-                    NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_input_empty);
-                } else if (!BrowserUnit.isURL(domain)) {
-                    NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_invalid_domain);
+        MaterialButton button = findViewById(R.id.whitelist_add);
+        button.setOnClickListener(v -> {
+            AppCompatEditText editText = findViewById(R.id.whitelist_edit);
+            String domain = LayoutUnit.getText(editText);
+            if (domain.isEmpty()) {
+                NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_input_empty);
+            } else if (!BrowserUnit.isURL(domain)) {
+                NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_invalid_domain);
+            } else {
+                RecordAction action1 = new RecordAction(Whitelist_AdBlock.this);
+                action1.open(true);
+                if (action1.checkDomain(domain)) {
+                    NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_domain_already_exists);
                 } else {
-                    RecordAction action = new RecordAction(Whitelist_AdBlock.this);
-                    action.open(true);
-                    if (action.checkDomain(domain)) {
-                        NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_domain_already_exists);
-                    } else {
-                        AdBlock adBlock = new AdBlock(Whitelist_AdBlock.this);
-                        adBlock.addDomain(domain.trim());
-                        list.add(0, domain.trim());
-                        adapter.notifyDataSetChanged();
-                        NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_add_whitelist_successful);
-                    }
-                    action.close();
+                    AdBlock adBlock = new AdBlock(Whitelist_AdBlock.this);
+                    adBlock.addDomain(domain.trim());
+                    list.add(0, domain.trim());
+                    adapter.notifyDataSetChanged();
+                    NinjaToast.show(Whitelist_AdBlock.this, R.string.toast_add_whitelist_successful);
                 }
+                action1.close();
             }
         });
     }
@@ -88,44 +93,34 @@ public class Whitelist_AdBlock extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_whitelist, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.whitelist_menu_clear:
-
                 final BottomSheetDialog dialog = new BottomSheetDialog(Whitelist_AdBlock.this);
                 View dialogView = View.inflate(Whitelist_AdBlock.this, R.layout.dialog_action, null);
-                TextView textView = dialogView.findViewById(R.id.dialog_text);
+                AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
                 textView.setText(R.string.toast_clear);
-                Button action_ok = dialogView.findViewById(R.id.action_ok);
-                action_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AdBlock adBlock = new AdBlock(Whitelist_AdBlock.this);
-                        adBlock.clearDomains();
-                        list.clear();
-                        adapter.notifyDataSetChanged();
-                        dialog.cancel();
-                    }
+                MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+                action_ok.setOnClickListener(view -> {
+                    AdBlock adBlock = new AdBlock(Whitelist_AdBlock.this);
+                    adBlock.clearDomains();
+                    list.clear();
+                    adapter.notifyDataSetChanged();
+                    dialog.cancel();
                 });
-                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                action_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                    }
-                });
+                MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+                action_cancel.setOnClickListener(view -> dialog.cancel());
                 dialog.setContentView(dialogView);
                 dialog.show();
-
                 break;
             default:
                 break;
@@ -133,7 +128,7 @@ public class Whitelist_AdBlock extends AppCompatActivity {
         return true;
     }
 
-    private void hideSoftInput(View view) {
+    private void hideSoftInput(@NonNull View view) {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;

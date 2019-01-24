@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ImageButton android:id="@+id/whitelist_item_cancel"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/whitelist_item_cancel"
                  android:contentDescription="@null"
                  android:layout_width="42dp"
                  android:layout_height="42dp"
@@ -14,7 +14,8 @@
                  android:src="@drawable/ic_action_close_red"
                  android:background="?attr/actionBarItemBackground"/>
 
-    <TextView android:id="@+id/whitelist_item_domain"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/whitelist_item_domain"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_centerInParent="true"

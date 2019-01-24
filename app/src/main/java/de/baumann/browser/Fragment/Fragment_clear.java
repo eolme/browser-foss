@@ -2,20 +2,23 @@ package de.baumann.browser.Fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import de.baumann.browser.Ninja.R;
 
-public class Fragment_clear extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Fragment_clear extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preference_clear);
     }
 
@@ -36,41 +39,27 @@ public class Fragment_clear extends PreferenceFragment implements SharedPreferen
     public void onSharedPreferenceChanged(SharedPreferences sp, String key) {}
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
-        switch (preference.getTitleRes()) {
-            case R.string.clear_title_deleteDatabase:
-
-                final SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
-                final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
-                View dialogView = View.inflate(getActivity(), R.layout.dialog_action, null);
-                TextView textView = dialogView.findViewById(R.id.dialog_text);
-                textView.setText(R.string.hint_database);
-                Button action_ok = dialogView.findViewById(R.id.action_ok);
-                action_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                        getActivity().deleteDatabase("Ninja4.db");
-                        getActivity().deleteDatabase("pass_DB_v01.db");
-                        sp.edit().putInt("restart_changed", 1).apply();
-                        getActivity().finish();
-                    }
-                });
-                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                action_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.setContentView(dialogView);
-                dialog.show();
-                break;
-
-            default:
-                break;
+    public boolean onPreferenceTreeClick(@NonNull Preference preference) {
+        FragmentActivity activity = getActivity();
+        if (activity != null && preference.getTitle() == getString(R.string.clear_title_deleteDatabase)) {
+            final SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
+            final BottomSheetDialog dialog = new BottomSheetDialog(activity);
+            View dialogView = View.inflate(getActivity(), R.layout.dialog_action, null);
+            AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
+            textView.setText(R.string.hint_database);
+            MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+            action_ok.setOnClickListener(view -> {
+                dialog.cancel();
+                getActivity().deleteDatabase("Ninja4.db");
+                getActivity().deleteDatabase("pass_DB_v01.db");
+                sp.edit().putInt("restart_changed", 1).apply();
+                getActivity().finish();
+            });
+            MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+            action_cancel.setOnClickListener(view -> dialog.cancel());
+            dialog.setContentView(dialogView);
+            dialog.show();
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 }

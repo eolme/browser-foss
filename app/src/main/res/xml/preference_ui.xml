@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <CheckBoxPreference android:key="sp_background"
+    <androidx.preference.CheckBoxPreference
+        android:key="sp_background"
         android:icon="@drawable/icon_link"
         android:defaultValue="true"
         android:title="@string/setting_title_background"
         android:summary="@string/setting_summary_background"/>
 
-    <CheckBoxPreference android:key="sp_darkUI"
+    <androidx.preference.CheckBoxPreference
+        android:key="sp_darkUI"
         android:icon="@drawable/icon_ui"
         android:defaultValue="false"
         android:title="@string/setting_title_themeDark"
         android:summary="@string/setting_summary_themeDark"/>
 
-    <ListPreference
+    <androidx.preference.ListPreference
         android:title="@string/setting_title_hideToolbar"
         android:icon="@drawable/icon_fullscreen"
         android:summary="@string/setting_summary_hide"
@@ -24,7 +24,7 @@
         android:entries="@array/setting_entries_toolbar"
         android:entryValues="@array/setting_values_toolbar" />
 
-    <ListPreference
+    <androidx.preference.ListPreference
         android:icon="@drawable/icon_size"
         android:key="sp_fontSize"
         android:defaultValue="100"
@@ -33,15 +33,16 @@
         android:entries="@array/setting_entries_font"
         android:entryValues="@array/setting_values_font"/>
 
-    <PreferenceCategory android:title="@string/setting_overView">
+    <androidx.preference.PreferenceCategory android:title="@string/setting_overView">
 
-        <CheckBoxPreference android:key="start_tabStart"
+        <androidx.preference.CheckBoxPreference
+            android:key="start_tabStart"
             android:icon="@drawable/icon_restart"
             android:defaultValue="true"
             android:title="@string/setting_overView_onStart_title"
             android:summary="@string/setting_overView_onStart_summary"/>
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:title="@string/setting_overView"
             android:icon="@drawable/icon_preview"
             android:summary="@string/setting_summary_tab"
@@ -50,12 +51,12 @@
             android:entries="@array/setting_entries_tab"
             android:entryValues="@array/setting_values_tab" />
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/setting_title_nav">
+    <androidx.preference.PreferenceCategory android:title="@string/setting_title_nav">
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:title="@string/setting_title_nav_show"
             android:icon="@drawable/icon_eye_off"
             android:summary="@string/setting_summary_nav_show"
@@ -64,7 +65,7 @@
             android:entries="@array/setting_entries_nav"
             android:entryValues="@array/setting_values_nav" />
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:title="@string/setting_title_nav_pos"
             android:icon="@drawable/icon_arrow_expand"
             android:summary="@string/setting_summary_nav_pos"
@@ -73,25 +74,24 @@
             android:entries="@array/setting_entries_nav_pos"
             android:entryValues="@array/setting_values_nav_pos" />
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
+    <androidx.preference.PreferenceCategory android:title="@string/setting_close">
 
-    <PreferenceCategory android:title="@string/setting_close">
-
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:defaultValue="true"
             android:icon="@drawable/icon_exit"
             android:key="sp_close_browser_confirm"
             android:title="@string/setting_title_confirm_exit"
             android:summary="@string/setting_summary_confirm_exit" />
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:defaultValue="true"
             android:icon="@drawable/icon_close"
             android:key="sp_close_tab_confirm"
             android:title="@string/setting_title_confirm_tab_close"
             android:summary="@string/setting_summary_confirm_tab_close" />
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,38 +21,10 @@ public class Cookie {
     private static final String FILE = "cookieHosts.txt";
     private static final Set<String> hostsCookie = new HashSet<>();
     private static final List<String> whitelistCookie = new ArrayList<>();
-    private static final Locale locale = Locale.getDefault();
-
-    private static void loadHosts(final Context context) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AssetManager manager = context.getAssets();
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(manager.open(FILE)));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        hostsCookie.add(line.toLowerCase(locale));
-                    }
-                } catch (IOException i) {
-                    Log.w("Browser", "Error loading hosts");
-                }
-            }
-        });
-        thread.start();
-    }
-
-    private synchronized static void loadDomains(Context context) {
-        RecordAction action = new RecordAction(context);
-        action.open(false);
-        whitelistCookie.clear();
-        whitelistCookie.addAll(action.listDomainsCookie());
-        action.close();
-    }
-
+    @NonNull
     private final Context context;
 
-    public Cookie(Context context) {
+    public Cookie(@NonNull Context context) {
         this.context = context;
 
         if (hostsCookie.isEmpty()) {
@@ -59,7 +33,31 @@ public class Cookie {
         loadDomains(context);
     }
 
-    public boolean isWhite(String url) {
+    private static void loadHosts(@NonNull Context context) {
+        Thread thread = new Thread(() -> {
+            AssetManager manager = context.getAssets();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(manager.open(FILE)));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    hostsCookie.add(line.toLowerCase(Locale.getDefault()));
+                }
+            } catch (IOException i) {
+                Log.w("Browser", "Error loading hosts");
+            }
+        });
+        thread.start();
+    }
+
+    private synchronized static void loadDomains(@NonNull Context context) {
+        RecordAction action = new RecordAction(context);
+        action.open(false);
+        whitelistCookie.clear();
+        whitelistCookie.addAll(action.listDomainsCookie());
+        action.close();
+    }
+
+    public boolean isWhite(@NonNull String url) {
         for (String domain : whitelistCookie) {
             if (url.contains(domain)) {
                 return true;
@@ -68,7 +66,7 @@ public class Cookie {
         return false;
     }
 
-    public synchronized void addDomain(String domain) {
+    public synchronized void addDomain(@NonNull String domain) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.addDomainCookie(domain);
@@ -76,7 +74,7 @@ public class Cookie {
         whitelistCookie.add(domain);
     }
 
-    public synchronized void removeDomain(String domain) {
+    public synchronized void removeDomain(@NonNull String domain) {
         RecordAction action = new RecordAction(context);
         action.open(true);
         action.deleteDomainCookie(domain);

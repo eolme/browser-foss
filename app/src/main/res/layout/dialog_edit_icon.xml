@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ContentDescription">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,12 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -37,22 +36,23 @@
                 android:paddingEnd="16dp"
                 android:text="@string/dialog_icon_hint" />
 
-            <LinearLayout android:id="@+id/icon_01"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_red" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_red"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -61,24 +61,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_02"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_02"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_pink" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_pink"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -87,24 +89,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_03"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_03"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_purple" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_purple"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -113,24 +117,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_04"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_04"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_blue" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_blue"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -139,24 +145,25 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout android:id="@+id/icon_05"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_05"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_teal" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_teal"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -165,24 +172,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_06"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_06"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_green" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_green"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -191,24 +200,25 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout android:id="@+id/icon_07"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_07"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_lime" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_lime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -217,24 +227,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_08"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_08"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_yellow" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_yellow"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -243,24 +255,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_09"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_09"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_orange" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_orange"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -269,24 +283,26 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-            <LinearLayout android:id="@+id/icon_10"
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_brown" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_brown"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -296,24 +312,25 @@
                     android:maxLines="1"
                     android:ellipsize="end"/>
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout android:id="@+id/icon_11"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/icon_11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_margin_12dp"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="horizontal"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+                android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/circle_grey" />
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -322,10 +339,11 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            </LinearLayout>
 
-        </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

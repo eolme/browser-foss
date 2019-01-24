@@ -5,26 +5,29 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public interface BrowserController {
     void updateAutoComplete();
 
     void updateBookmarks();
 
-    void updateInputBox(String query);
+    void updateInputBox(@Nullable String query);
 
     void updateProgress(int progress);
 
-    void showAlbum(AlbumController albumController);
+    void showAlbum(@NonNull AlbumController albumController);
 
-    void removeAlbum(AlbumController albumController);
+    void removeAlbum(@NonNull AlbumController albumController);
 
-    void showFileChooser(ValueCallback<Uri[]> filePathCallback);
+    void showFileChooser(@NonNull ValueCallback<Uri[]> filePathCallback);
 
-    void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback);
+    void onShowCustomView(@Nullable View view, @Nullable WebChromeClient.CustomViewCallback callback);
 
     boolean onHideCustomView();
 
-    void onLongPress(String url);
+    void onLongPress(@Nullable String url);
 
     void hideOverview ();
 }

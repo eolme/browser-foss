@@ -1,36 +1,98 @@
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "de.baumann.browser"
+        applicationId 'de.baumann.browser'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 88
-        versionName "6.2"
+        versionCode 1
+        versionName "1.0.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
 
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            keyAlias keystoreProperties['KEY_ALIAS']
+            keyPassword keystoreProperties['KEY_PASSWORD']
+            storeFile file(keystoreProperties['STORE_FILE'])
+            storePassword keystoreProperties['STORE_PASSWORD']
         }
     }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         checkReleaseBuilds false
         disable 'MissingTranslation'
     }
-    return void
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.mobapphome.library:mah-encryptor-lib:1.0.1'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+
+    implementation 'androidx.activity:activity:1.0.0-alpha03'
+    implementation 'androidx.annotation:annotation:1.0.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.collection:collection:1.1.0-alpha01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0-alpha01'
+    implementation 'androidx.core:core:1.1.0-alpha03'
+    implementation 'androidx.databinding:databinding-runtime:3.5.0-alpha01'
+    implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
+    implementation 'androidx.fragment:fragment:1.1.0-alpha03'
+    implementation 'androidx.preference:preference:1.1.0-alpha02'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha01'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0-alpha01'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.loader:loader:1.1.0-alpha01'
+    implementation 'androidx.webkit:webkit:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0-alpha01'
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.sqlite:sqlite:2.0.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.0.0'
+    implementation 'androidx.media:media:1.1.0-alpha01'
+    implementation 'androidx.media2:media2:1.0.0-alpha04'
+    implementation 'androidx.mediarouter:mediarouter:1.1.0-alpha01'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'
+    implementation 'androidx.cursoradapter:cursoradapter:1.0.0'
+    implementation 'androidx.loader:loader:1.1.0-alpha01'
+    implementation 'androidx.savedstate:savedstate-bundle:1.0.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
+
+    implementation 'org.jetbrains:annotations:16.0.3'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    implementation 'com.mobapphome.library:simple-encryptor-lib:1.1.3'
 }

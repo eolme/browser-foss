@@ -18,7 +18,8 @@
             android:minHeight="@dimen/layout_margin_56dp"
             android:background="@color/colorPrimary">
 
-            <ImageButton android:id="@+id/omnibox_overview"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/omnibox_overview"
                 android:layout_alignParentStart="true"
                 android:contentDescription="@null"
                 android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
                 android:src="@drawable/action_overview"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <ImageButton android:id="@+id/omnibox_overflow"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/omnibox_overflow"
                 android:contentDescription="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -36,7 +38,8 @@
                 android:src="@drawable/ic_action_overflow"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <ImageButton android:id="@+id/omnibox_refresh"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/omnibox_refresh"
                 android:contentDescription="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -45,7 +48,8 @@
                 android:src="@drawable/ic_action_refresh"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <AutoCompleteTextView android:id="@+id/main_omnibox_input"
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/main_omnibox_input"
                 android:layout_width="match_parent"
                 android:layout_toEndOf="@+id/omnibox_overview"
                 android:layout_height="match_parent"
@@ -65,7 +69,8 @@
                 android:textColor="@color/color_light"
                 android:background="@color/colorPrimary"/>
 
-            <TextView android:id="@+id/omnibox_title"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/omnibox_title"
                 android:layout_toEndOf="@+id/omnibox_overview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -90,7 +95,8 @@
             android:visibility="gone"
             android:background="@color/colorPrimary">
 
-            <ImageButton android:id="@+id/main_search_cancel"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/main_search_cancel"
                 android:contentDescription="@null"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
@@ -101,7 +107,8 @@
                 android:src="@drawable/ic_action_close"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <ImageButton android:id="@+id/main_search_down"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/main_search_down"
                 android:contentDescription="@null"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
@@ -112,7 +119,8 @@
                 android:src="@drawable/icon_arrow_down"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <ImageButton android:id="@+id/main_search_up"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/main_search_up"
                 android:contentDescription="@null"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
@@ -123,7 +131,8 @@
                 android:src="@drawable/icon_arrow_up"
                 android:background="?attr/actionBarItemBackground"/>
 
-            <EditText android:id="@+id/main_search_box"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/main_search_box"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"

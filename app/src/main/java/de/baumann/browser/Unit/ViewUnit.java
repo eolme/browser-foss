@@ -8,9 +8,13 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.Dimension;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+
 public class ViewUnit {
 
-    public static void bound(Context context, View view) {
+    public static void bound(@NonNull Context context, @NonNull View view) {
         int windowWidth = getWindowWidth(context);
         int windowHeight = getWindowHeight(context);
 
@@ -21,7 +25,9 @@ public class ViewUnit {
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
     }
 
-    public static Bitmap capture(View view, float width, float height, Bitmap.Config config) {
+    @NonNull
+    public static Bitmap capture(@NonNull View view, @Dimension float width,
+                                 @Dimension float height, @NonNull Bitmap.Config config) {
         if (!view.isDrawingCacheEnabled()) {
             view.setDrawingCacheEnabled(true);
         }
@@ -55,19 +61,19 @@ public class ViewUnit {
         return bitmap;
     }
 
-    public static float getDensity(Context context) {
+    public static float getDensity(@NonNull Context context) {
         return context.getResources().getDisplayMetrics().density;
     }
 
-    public static Drawable getDrawable(Context context, int id) {
+    public static Drawable getDrawable(@NonNull Context context, @DrawableRes int id) {
         return context.getResources().getDrawable(id, null);
     }
 
-    private static int getWindowHeight(Context context) {
+    private static int getWindowHeight(@NonNull Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
-    public static int getWindowWidth(Context context) {
+    public static int getWindowWidth(@NonNull Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
     }
 }

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +19,7 @@ public class RecordAction {
     private SQLiteDatabase database;
     private final RecordHelper helper;
 
-    public RecordAction(Context context) {
+    public RecordAction(@NonNull Context context) {
         this.helper = new RecordHelper(context);
     }
 
@@ -28,7 +31,7 @@ public class RecordAction {
         helper.close();
     }
 
-    public void addHistory(Record record) {
+    public void addHistory(@Nullable Record record) {
         if (record == null
                 || record.getTitle() == null
                 || record.getTitle().trim().isEmpty()
@@ -46,7 +49,7 @@ public class RecordAction {
 
     }
 
-    public void addDomain(String domain) {
+    public void addDomain(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -57,7 +60,7 @@ public class RecordAction {
 
     }
 
-    public void addDomainJS(String domain) {
+    public void addDomainJS(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -68,7 +71,7 @@ public class RecordAction {
 
     }
 
-    public void addDomainCookie(String domain) {
+    public void addDomainCookie(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -79,7 +82,7 @@ public class RecordAction {
 
     }
 
-    public boolean addGridItem(GridItem item) {
+    public boolean addGridItem(@Nullable GridItem item) {
         if (item == null
                 || item.getTitle() == null
                 || item.getTitle().trim().isEmpty()
@@ -101,7 +104,7 @@ public class RecordAction {
         return true;
     }
 
-    public void updateGridItem(GridItem item) {
+    public void updateGridItem(@Nullable GridItem item) {
         if (item == null
                 || item.getTitle() == null
                 || item.getTitle().trim().isEmpty()
@@ -122,7 +125,7 @@ public class RecordAction {
 
     }
 
-    public void deleteHistoryOld(String domain) {
+    public void deleteHistoryOld(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -130,7 +133,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM "+ RecordUnit.TABLE_HISTORY + " WHERE " + RecordUnit.COLUMN_URL + " = " + "\"" + domain.trim() + "\"");
     }
 
-    public boolean checkHistory(String url) {
+    public boolean checkHistory(@Nullable String url) {
         if (url == null || url.trim().isEmpty()) {
             return false;
         }
@@ -155,7 +158,7 @@ public class RecordAction {
         return false;
     }
 
-    public boolean checkDomain(String domain) {
+    public boolean checkDomain(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return false;
         }
@@ -180,7 +183,7 @@ public class RecordAction {
         return false;
     }
 
-    public boolean checkDomainJS(String domain) {
+    public boolean checkDomainJS(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return false;
         }
@@ -205,7 +208,7 @@ public class RecordAction {
         return false;
     }
 
-    public boolean checkDomainCookie(String domain) {
+    public boolean checkDomainCookie(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return false;
         }
@@ -230,7 +233,7 @@ public class RecordAction {
         return false;
     }
 
-    public boolean checkGridItem(String url) {
+    public boolean checkGridItem(@Nullable String url) {
         if (url == null || url.trim().isEmpty()) {
             return false;
         }
@@ -255,7 +258,7 @@ public class RecordAction {
         return false;
     }
 
-    public void deleteHistory(Record record) {
+    public void deleteHistory(@Nullable Record record) {
         if (record == null || record.getTime() <= 0) {
             return;
         }
@@ -263,7 +266,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM "+ RecordUnit.TABLE_HISTORY + " WHERE " + RecordUnit.COLUMN_TIME + " = " + record.getTime());
     }
 
-    public void deleteDomain(String domain) {
+    public void deleteDomain(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -271,7 +274,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM "+ RecordUnit.TABLE_WHITELIST + " WHERE " + RecordUnit.COLUMN_DOMAIN + " = " + "\"" + domain.trim() + "\"");
     }
 
-    public void deleteDomainJS(String domain) {
+    public void deleteDomainJS(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -279,7 +282,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM "+ RecordUnit.TABLE_JAVASCRIPT + " WHERE " + RecordUnit.COLUMN_DOMAIN + " = " + "\"" + domain.trim() + "\"");
     }
 
-    public void deleteDomainCookie(String domain) {
+    public void deleteDomainCookie(@Nullable String domain) {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
@@ -287,7 +290,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM "+ RecordUnit.TABLE_COOKIE + " WHERE " + RecordUnit.COLUMN_DOMAIN + " = " + "\"" + domain.trim() + "\"");
     }
 
-    public void deleteGridItem(GridItem item) {
+    public void deleteGridItem(@Nullable GridItem item) {
         if (item == null || item.getURL() == null || item.getURL().trim().isEmpty()) {
             return;
         }
@@ -317,7 +320,7 @@ public class RecordAction {
         database.execSQL("DELETE FROM " + RecordUnit.TABLE_GRID);
     }
 
-    private Record getRecord(Cursor cursor) {
+    private Record getRecord(@NonNull Cursor cursor) {
         Record record = new Record();
         record.setTitle(cursor.getString(0));
         record.setURL(cursor.getString(1));
@@ -326,7 +329,7 @@ public class RecordAction {
         return record;
     }
 
-    private GridItem getGridItem(Cursor cursor) {
+    private GridItem getGridItem(@NonNull Cursor cursor) {
         GridItem item = new GridItem();
         item.setTitle(cursor.getString(0));
         item.setURL(cursor.getString(1));
@@ -336,6 +339,7 @@ public class RecordAction {
         return item;
     }
 
+    @NonNull
     public List<Record> listBookmarks() {
         List<Record> list = new ArrayList<>();
 
@@ -367,6 +371,7 @@ public class RecordAction {
         return list;
     }
 
+    @NonNull
     public List<Record> listHistory() {
         List<Record> list = new ArrayList<>();
 
@@ -398,6 +403,7 @@ public class RecordAction {
         return list;
     }
 
+    @NonNull
     public List<String> listDomains() {
         List<String> list = new ArrayList<>();
 
@@ -425,6 +431,7 @@ public class RecordAction {
         return list;
     }
 
+    @NonNull
     public List<String> listDomainsJS() {
         List<String> list = new ArrayList<>();
 
@@ -452,6 +459,7 @@ public class RecordAction {
         return list;
     }
 
+    @NonNull
     public List<String> listDomainsCookie() {
         List<String> list = new ArrayList<>();
 
@@ -479,6 +487,7 @@ public class RecordAction {
         return list;
     }
 
+    @NonNull
     public List<GridItem> listGrid() {
         List<GridItem> list = new LinkedList<>();
 

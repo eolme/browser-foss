@@ -1,29 +1,31 @@
 package de.baumann.browser.View;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import androidx.core.view.GestureDetectorCompat;
 
-@SuppressWarnings("WeakerAccess")
 public class SwipeTouchListener implements OnTouchListener {
 
-    private final GestureDetector gestureDetector;
+    private final GestureDetectorCompat gestureDetector;
 
     public SwipeTouchListener(Context ctx){
-        gestureDetector = new GestureDetector(ctx, new GestureListener());
+        gestureDetector = new GestureDetectorCompat(ctx, new GestureListener());
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
+        if (gestureDetector.onTouchEvent(event)) {
+            return true;
+        } else {
+            return v.performClick();
+        }
     }
 
-    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
+    private final class GestureListener implements GestureDetector.OnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -31,6 +33,26 @@ public class SwipeTouchListener implements OnTouchListener {
         @Override
         public boolean onDown(MotionEvent e) {
             return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+
         }
 
         @Override

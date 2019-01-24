@@ -5,13 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.MailTo;
 
+import androidx.annotation.NonNull;
+
+import org.jetbrains.annotations.Contract;
+
 import de.baumann.browser.Ninja.R;
 
 public class IntentUnit {
 
     private static final String INTENT_TYPE_MESSAGE_RFC822 = "message/rfc822";
 
-    public static Intent getEmailIntent(MailTo mailTo) {
+    public static Intent getEmailIntent(@NonNull MailTo mailTo) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] { mailTo.getTo() });
         intent.putExtra(Intent.EXTRA_TEXT, mailTo.getBody());
@@ -22,12 +26,12 @@ public class IntentUnit {
         return intent;
     }
 
-    public static void share(Context context, String title, String url) {
+    public static void share(@NonNull Context context, @NonNull String title, @NonNull String url) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
         sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
-        context.startActivity(Intent.createChooser(sharingIntent, (context.getString(R.string.menu_share_link))));
+        context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.menu_share_link)));
     }
 
     // Activity holder
@@ -36,11 +40,15 @@ public class IntentUnit {
     public static void setContext(Context holder) {
         context = holder;
     }
+
+    @Contract(pure = true)
     public static Context getContext() {
         return context;
     }
 
     private static boolean clear = false;
+
+    @Contract(pure = true)
     public static boolean isClear() {
         return clear;
     }

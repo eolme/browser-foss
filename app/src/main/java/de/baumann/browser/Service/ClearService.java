@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 
 public class ClearService extends Service {
     @Override
-    public IBinder onBind(Intent intent) {
+    @Nullable
+    public IBinder onBind(@NonNull Intent intent) {
         return null;
     }
 
@@ -21,7 +25,7 @@ public class ClearService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(@NonNull Intent intent, int flags, int startId) {
         clear();
         stopSelf();
         return START_STICKY;

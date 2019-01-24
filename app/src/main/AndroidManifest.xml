@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.baumann.browser.Ninja">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.baumann.browser.Ninja">
 
     <!-- Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +20,8 @@
         android:enabled="true"
         android:largeHeap="true"
         android:usesCleartextTraffic="true"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        tools:targetApi="m">
 
         <!-- Holder -->
         <activity android:name="de.baumann.browser.Activity.HolderActivity"
@@ -65,8 +65,10 @@
                 <action android:name="sc_bookmark" />
                 <action android:name="sc_history" />
             </intent-filter>
+
             <meta-data android:name="android.app.searchable"
                        android:resource="@xml/searchable"/>
+
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
@@ -116,13 +118,15 @@
                  android:icon="@mipmap/ic_launcher"/>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="de.baumann.browser.provider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
+
         </provider>
 
     </application>

@@ -1,40 +1,41 @@
 package de.baumann.browser.View;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import de.baumann.browser.Database.Record;
-import de.baumann.browser.Ninja.R;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import de.baumann.browser.Database.Record;
+import de.baumann.browser.Ninja.R;
+
 public class Adapter_Record extends ArrayAdapter<Record> {
+    @NonNull
     private final Context context;
+    @LayoutRes
     private final int layoutResId;
+    @NonNull
     private final List<Record> list;
 
-    public Adapter_Record(Context context, List<Record> list) {
+    public Adapter_Record(@NonNull Context context, @NonNull List<Record> list) {
         super(context, R.layout.list_item, list);
         this.context = context;
         this.layoutResId = R.layout.list_item;
         this.list = list;
     }
 
-    private static class Holder {
-        TextView title;
-        TextView time;
-        TextView url;
-    }
-
     @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Holder holder;
         View view = convertView;
 
@@ -50,10 +51,17 @@ public class Adapter_Record extends ArrayAdapter<Record> {
         }
 
         Record record = list.get(position);
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());holder.title.setText(record.getTitle());
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
+        holder.title.setText(record.getTitle());
         holder.time.setText(sdf.format(record.getTime()));
         holder.url.setText(record.getURL());
 
         return view;
+    }
+
+    private static class Holder {
+        AppCompatTextView title;
+        AppCompatTextView time;
+        AppCompatTextView url;
     }
 }

@@ -1,16 +1,69 @@
-# built application files
-# files for the dex VM
-# Java class files
-# generated files
-gen/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Eclipse project files
-# Android Studio
-.idea/
-.gradle
-gradle
-build
+*.ap_
+*.apk
+*.class
+*.ctxt
+*.dex
+*.ear
+*.evcd
+*.fsdb
 *.iml
+*.ipr
+*.iws
+*.jar
+*.jks
+*.key
+*.keystore
+*.log
+*.nar
+*.rar
+*.tar.gz
+*.vcd
+*.vpd
+*.war
+*.zip
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DS-Store/
+.DS_Store
+.DocumentRevisions-V100
+.LSOverride
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+._*
+.apdisk
+.com.apple.timemachine.donotpresent
+.externalNativeBuild
+.fseventsd
+.git/
+.gradle/
+.gradletasknamecache
+.idea/
+.idea_modules/
+.navigation/
+.svn/
+.tgitconfig
+.vscode/
+atlassian-ide-plugin.xml
+bin/
+build/
+captures/
+cmake-build-*/
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+crashlytics.properties
+fabric.properties
+gen/
+gradle-app.setting
+local.properties
+out/
+proguard/
+!gradle-wrapper.jar
+vcs.xml
+modules.xml
+google-services.json
+app/release/*.json
+signing.properties
+keystore.properties

@@ -1,8 +1,10 @@
 package de.baumann.browser.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,14 +14,14 @@ import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Service.HolderService;
 import de.baumann.browser.Unit.RecordUnit;
 
-public class HolderActivity extends Activity {
+public class HolderActivity extends AppCompatActivity {
     private static final int TIMER_SCHEDULE_DEFAULT = 512;
 
     private Record first = null;
     private Timer timer = null;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent() == null || getIntent().getData() == null) {
             finish();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,11 +9,11 @@
     android:paddingStart="20dp"
     android:paddingTop="15dp">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialog_edit"
             android:selectAllOnFocus="true"
             android:layout_width="match_parent"
@@ -20,16 +21,17 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:hint="@string/dialog_title_hint"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            tools:targetApi="o" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/action_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +40,8 @@
             android:textColor="@color/colorAccent"
             android:text="@string/app_ok"/>
 
-        <Button android:id="@+id/action_cancel"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/action_ok"
@@ -48,4 +51,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

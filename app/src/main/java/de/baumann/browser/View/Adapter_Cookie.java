@@ -1,13 +1,16 @@
 package de.baumann.browser.View;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.TextView;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.util.List;
 
@@ -15,25 +18,23 @@ import de.baumann.browser.Browser.Cookie;
 import de.baumann.browser.Ninja.R;
 
 public class Adapter_Cookie extends ArrayAdapter<String> {
+    @NonNull
     private final Context context;
+    @LayoutRes
     private final int layoutResId;
+    @NonNull
     private final List<String> list;
 
-    public Adapter_Cookie(Context context, List<String> list){
+    public Adapter_Cookie(@NonNull Context context, @NonNull List<String> list) {
         super(context, R.layout.whitelist_item, list);
         this.context = context;
         this.layoutResId = R.layout.whitelist_item;
         this.list = list;
     }
 
-    private static class Holder {
-        TextView domain;
-        ImageButton cancel;
-    }
-
     @NonNull
     @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Holder holder;
         View view = convertView;
 
@@ -48,17 +49,19 @@ public class Adapter_Cookie extends ArrayAdapter<String> {
         }
 
         holder.domain.setText(list.get(position));
-        holder.cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cookie cookie = new Cookie(context);
-                cookie.removeDomain(list.get(position));
-                list.remove(position);
-                notifyDataSetChanged();
-                NinjaToast.show(context, R.string.toast_delete_successful);
-            }
+        holder.cancel.setOnClickListener(v -> {
+            Cookie cookie = new Cookie(context);
+            cookie.removeDomain(list.get(position));
+            list.remove(position);
+            notifyDataSetChanged();
+            NinjaToast.show(context, R.string.toast_delete_successful);
         });
 
         return view;
+    }
+
+    private static class Holder {
+        AppCompatTextView domain;
+        AppCompatImageButton cancel;
     }
 }

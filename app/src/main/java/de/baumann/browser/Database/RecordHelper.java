@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import de.baumann.browser.Unit.RecordUnit;
 
-@SuppressWarnings("WeakerAccess")
 public class RecordHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Ninja4.db";
     private static final int DATABASE_VERSION = 1;

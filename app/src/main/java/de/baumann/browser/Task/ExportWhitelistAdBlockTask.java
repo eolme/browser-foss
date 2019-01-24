@@ -3,10 +3,14 @@ package de.baumann.browser.Task;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
@@ -18,7 +22,7 @@ public class ExportWhitelistAdBlockTask extends AsyncTask<Void, Void, Boolean> {
     private BottomSheetDialog dialog;
     private String path;
 
-    public ExportWhitelistAdBlockTask(Context context) {
+    public ExportWhitelistAdBlockTask(@NonNull Context context) {
         this.context = context;
         this.dialog = null;
         this.path = null;
@@ -28,11 +32,13 @@ public class ExportWhitelistAdBlockTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPreExecute() {
         dialog = new BottomSheetDialog(context);
         View dialogView = View.inflate(context, R.layout.dialog_progress, null);
-        TextView textView = dialogView.findViewById(R.id.dialog_text);
+        AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
         textView.setText(context.getString(R.string.toast_wait_a_minute));
         dialog.setContentView(dialogView);
-        //noinspection ConstantConditions
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        }
         dialog.show();
     }
 

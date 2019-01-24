@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/colorBackground"
@@ -8,7 +7,7 @@
     tools:ignore="ContentDescription"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
@@ -21,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,96 +28,96 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/overview_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:scaleType="fitCenter" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/overview_dialog"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/startSite_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:src="@drawable/help_startsite"
                 android:scaleType="fitCenter" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/startSite_dialog"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:scaleType="centerInside" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/menu_dialog"/>
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fastToggle_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:scaleType="centerInside" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/fastToggle_dialog"/>
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/not_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_not"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,54 +125,54 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:scaleType="centerInside" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/not_dialog"/>
-            
 
-            <TextView
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gestures_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_nav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:scaleType="centerInside" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="@string/gestures_dialog"/>
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/setting_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:src="@drawable/help_set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:scaleType="centerInside" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_dialog"/>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -187,12 +186,12 @@
                     android:layout_height="1dp"
                     android:background="?android:attr/colorControlHighlight" />
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <ImageButton
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/floatButton_settings"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
@@ -203,7 +202,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/icon_settings" />
 
-                    <ImageButton
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/floatButton_ok"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
@@ -214,12 +213,12 @@
                         android:contentDescription="@null"
                         android:src="@drawable/check_white" />
 
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

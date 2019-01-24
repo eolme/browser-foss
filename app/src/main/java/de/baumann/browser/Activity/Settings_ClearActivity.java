@@ -3,15 +3,19 @@ package de.baumann.browser.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import de.baumann.browser.Fragment.Fragment_clear;
 import de.baumann.browser.Ninja.R;
@@ -21,9 +25,8 @@ import de.baumann.browser.View.NinjaToast;
 
 public class Settings_ClearActivity extends AppCompatActivity {
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -31,9 +34,12 @@ public class Settings_ClearActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, new Fragment_clear()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new Fragment_clear()).commit();
     }
 
     @Override
@@ -49,26 +55,17 @@ public class Settings_ClearActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.clear_menu_done_all:
-
                 final BottomSheetDialog dialog = new BottomSheetDialog(Settings_ClearActivity.this);
                 View dialogView = View.inflate(Settings_ClearActivity.this, R.layout.dialog_action, null);
-                TextView textView = dialogView.findViewById(R.id.dialog_text);
+                AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
                 textView.setText(R.string.toast_clear);
-                Button action_ok = dialogView.findViewById(R.id.action_ok);
-                action_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        clear();
-                        dialog.cancel();
-                    }
+                MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+                action_ok.setOnClickListener(view -> {
+                    clear();
+                    dialog.cancel();
                 });
-                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                action_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                    }
-                });
+                MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+                action_cancel.setOnClickListener(view -> dialog.cancel());
                 dialog.setContentView(dialogView);
                 dialog.show();
                 break;
@@ -88,10 +85,9 @@ public class Settings_ClearActivity extends AppCompatActivity {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
 
         View dialogView = View.inflate(this, R.layout.dialog_progress, null);
-        TextView textView = dialogView.findViewById(R.id.dialog_text);
+        AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
         textView.setText(this.getString(R.string.toast_wait_a_minute));
         dialog.setContentView(dialogView);
-        //noinspection ConstantConditions
         dialog.show();
 
         if (clearCache) {

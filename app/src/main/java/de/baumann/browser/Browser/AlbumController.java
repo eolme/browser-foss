@@ -3,7 +3,6 @@ package de.baumann.browser.Browser;
 import android.graphics.Bitmap;
 import android.view.View;
 
-@SuppressWarnings("unused")
 public interface AlbumController {
 
     View getAlbumView();

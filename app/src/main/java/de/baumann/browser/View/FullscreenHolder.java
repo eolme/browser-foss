@@ -1,20 +1,25 @@
 package de.baumann.browser.View;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 public class FullscreenHolder extends FrameLayout {
-    public FullscreenHolder(Context context) {
+    public FullscreenHolder(@NonNull Context context) {
         super(context);
         this.setBackgroundColor(ContextCompat.getColor(context,(android.R.color.black)));
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return true;
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
+        return performClick();
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 }

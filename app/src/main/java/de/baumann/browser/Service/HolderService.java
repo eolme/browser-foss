@@ -13,12 +13,18 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import de.baumann.browser.Activity.BrowserActivity;
 import de.baumann.browser.Browser.AlbumController;
 import de.baumann.browser.Browser.BrowserContainer;
 import de.baumann.browser.Browser.BrowserController;
 import de.baumann.browser.Ninja.R;
-import de.baumann.browser.Unit.*;
+import de.baumann.browser.Unit.IntentUnit;
+import de.baumann.browser.Unit.NotificationUnit;
+import de.baumann.browser.Unit.RecordUnit;
+import de.baumann.browser.Unit.ViewUnit;
 import de.baumann.browser.View.NinjaContextWrapper;
 import de.baumann.browser.View.NinjaWebView;
 
@@ -61,9 +67,9 @@ public class HolderService extends Service implements BrowserController {
     public void onLongPress(String url) {}
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
+    public int onStartCommand(@NonNull Intent intent, int flags, int startId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
         if (sp.getBoolean("sp_background", true)) {
             WebView.enableSlowWholeDocumentDraw();
             NinjaWebView webView = new NinjaWebView(new NinjaContextWrapper(this));
@@ -99,7 +105,8 @@ public class HolderService extends Service implements BrowserController {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    @Nullable
+    public IBinder onBind(@NonNull Intent intent) {
         return null;
     }
 

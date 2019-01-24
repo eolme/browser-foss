@@ -1,20 +1,31 @@
 package de.baumann.browser.Database;
 
+import androidx.annotation.Nullable;
+
 public class Record {
+    @Nullable
     private String title;
+    @Nullable
+    private String url;
+
+    public Record(@Nullable String title, @Nullable String url, long time) {
+        this.title = title;
+        this.url = url;
+        this.time = time;
+    }
+
+    @Nullable
     public String getTitle() {
         return title;
     }
-    public void setTitle(String title) {
+
+    public void setTitle(@Nullable String title) {
         this.title = title;
     }
 
-    private String url;
+    @Nullable
     public String getURL() {
         return url;
-    }
-    public void setURL(String url) {
-        this.url = url;
     }
 
     private long time;
@@ -31,9 +42,7 @@ public class Record {
         this.time = 0L;
     }
 
-    public Record(String title, String url, long time) {
-        this.title = title;
+    public void setURL(@Nullable String url) {
         this.url = url;
-        this.time = time;
     }
 }

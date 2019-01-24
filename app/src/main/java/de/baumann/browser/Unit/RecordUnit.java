@@ -1,5 +1,7 @@
 package de.baumann.browser.Unit;
 
+import org.jetbrains.annotations.Contract;
+
 import de.baumann.browser.Database.Record;
 
 public class RecordUnit {
@@ -61,6 +63,8 @@ public class RecordUnit {
             + ")";
 
     private static Record holder;
+
+    @Contract(pure = true)
     public static Record getHolder() {
         return holder;
     }

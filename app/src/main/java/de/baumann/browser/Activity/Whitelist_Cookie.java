@@ -2,18 +2,23 @@ package de.baumann.browser.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -22,6 +27,7 @@ import de.baumann.browser.Database.RecordAction;
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 import de.baumann.browser.Unit.HelperUnit;
+import de.baumann.browser.Unit.LayoutUnit;
 import de.baumann.browser.View.Adapter_Cookie;
 import de.baumann.browser.View.NinjaToast;
 
@@ -29,9 +35,8 @@ public class Whitelist_Cookie extends AppCompatActivity {
     private Adapter_Cookie adapter;
     private List<String> list;
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -39,7 +44,10 @@ public class Whitelist_Cookie extends AppCompatActivity {
         setContentView(R.layout.whitelist);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         RecordAction action = new RecordAction(this);
         action.open(false);
@@ -53,30 +61,27 @@ public class Whitelist_Cookie extends AppCompatActivity {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        Button button = findViewById(R.id.whitelist_add);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editText = findViewById(R.id.whitelist_edit);
-                String domain = editText.getText().toString().trim();
-                if (domain.isEmpty()) {
-                    NinjaToast.show(Whitelist_Cookie.this, R.string.toast_input_empty);
-                } else if (!BrowserUnit.isURL(domain)) {
-                    NinjaToast.show(Whitelist_Cookie.this, R.string.toast_invalid_domain);
+        MaterialButton button = findViewById(R.id.whitelist_add);
+        button.setOnClickListener(v -> {
+            AppCompatEditText editText = findViewById(R.id.whitelist_edit);
+            String domain = LayoutUnit.getText(editText);
+            if (domain.isEmpty()) {
+                NinjaToast.show(Whitelist_Cookie.this, R.string.toast_input_empty);
+            } else if (!BrowserUnit.isURL(domain)) {
+                NinjaToast.show(Whitelist_Cookie.this, R.string.toast_invalid_domain);
+            } else {
+                RecordAction action1 = new RecordAction(Whitelist_Cookie.this);
+                action1.open(true);
+                if (action1.checkDomainCookie(domain)) {
+                    NinjaToast.show(Whitelist_Cookie.this, R.string.toast_domain_already_exists);
                 } else {
-                    RecordAction action = new RecordAction(Whitelist_Cookie.this);
-                    action.open(true);
-                    if (action.checkDomainCookie(domain)) {
-                        NinjaToast.show(Whitelist_Cookie.this, R.string.toast_domain_already_exists);
-                    } else {
-                        Cookie cookie = new Cookie(Whitelist_Cookie.this);
-                        cookie.addDomain(domain.trim());
-                        list.add(0, domain.trim());
-                        adapter.notifyDataSetChanged();
-                        NinjaToast.show(Whitelist_Cookie.this, R.string.toast_add_whitelist_successful);
-                    }
-                    action.close();
+                    Cookie cookie = new Cookie(Whitelist_Cookie.this);
+                    cookie.addDomain(domain.trim());
+                    list.add(0, domain.trim());
+                    adapter.notifyDataSetChanged();
+                    NinjaToast.show(Whitelist_Cookie.this, R.string.toast_add_whitelist_successful);
                 }
+                action1.close();
             }
         });
     }
@@ -103,26 +108,18 @@ public class Whitelist_Cookie extends AppCompatActivity {
 
                 final BottomSheetDialog dialog = new BottomSheetDialog(Whitelist_Cookie.this);
                 View dialogView = View.inflate(Whitelist_Cookie.this, R.layout.dialog_action, null);
-                TextView textView = dialogView.findViewById(R.id.dialog_text);
+                AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
                 textView.setText(R.string.toast_clear);
-                Button action_ok = dialogView.findViewById(R.id.action_ok);
-                action_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Cookie cookie = new Cookie(Whitelist_Cookie.this);
-                        cookie.clearDomains();
-                        list.clear();
-                        adapter.notifyDataSetChanged();
-                        dialog.cancel();
-                    }
+                MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
+                action_ok.setOnClickListener(view -> {
+                    Cookie cookie = new Cookie(Whitelist_Cookie.this);
+                    cookie.clearDomains();
+                    list.clear();
+                    adapter.notifyDataSetChanged();
+                    dialog.cancel();
                 });
-                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                action_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                    }
-                });
+                MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
+                action_cancel.setOnClickListener(view -> dialog.cancel());
                 dialog.setContentView(dialogView);
                 dialog.show();
 
@@ -133,7 +130,7 @@ public class Whitelist_Cookie extends AppCompatActivity {
         return true;
     }
 
-    private void hideSoftInput(View view) {
+    private void hideSoftInput(@NonNull View view) {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,12 +10,12 @@
     android:paddingStart="20dp"
     android:paddingTop="15dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ib_icon"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -23,83 +24,80 @@
             android:contentDescription="@null"
             android:src="@drawable/circle_red" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:passwordToggleEnabled="false" >
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/dialog_title_hint"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-    </LinearLayout>
-
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="false" >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="@string/dialog_url_hint"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            tools:targetApi="o" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="false" >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass_userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="@string/dialog_sign_in_username"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            tools:targetApi="o" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true" >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass_userPW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/dialog_sign_in_password"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            tools:targetApi="o" />
 
-    </android.support.design.widget.TextInputLayout>
-
-
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/action_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +106,8 @@
             android:textColor="@color/colorAccent"
             android:text="@string/app_ok"/>
 
-        <Button android:id="@+id/action_cancel"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/action_ok"
@@ -118,4 +117,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
