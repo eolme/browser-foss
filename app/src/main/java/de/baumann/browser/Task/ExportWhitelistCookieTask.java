@@ -1,35 +1,44 @@
 package de.baumann.browser.Task;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.lang.ref.WeakReference;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
 import de.baumann.browser.View.NinjaToast;
 
-@SuppressLint("StaticFieldLeak")
 public class ExportWhitelistCookieTask extends AsyncTask<Void, Void, Boolean> {
-    private final Context context;
+    @NonNull
+    private final WeakReference<Activity> referenceContext;
+    @Nullable
     private BottomSheetDialog dialog;
+    @Nullable
     private String path;
 
-    public ExportWhitelistCookieTask(@NonNull Context context) {
-        this.context = context;
+    public ExportWhitelistCookieTask(@NonNull Activity context) {
+        this.referenceContext = new WeakReference<>(context);
         this.dialog = null;
         this.path = null;
     }
 
     @Override
     protected void onPreExecute() {
+        Activity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+
         dialog = new BottomSheetDialog(context);
         View dialogView = View.inflate(context, R.layout.dialog_progress, null);
         AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
@@ -43,15 +52,28 @@ public class ExportWhitelistCookieTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
+    @NonNull
     protected Boolean doInBackground(Void... params) {
+        Activity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return false;
+        }
+
         path = BrowserUnit.exportWhitelist(context, 2);
         return !isCancelled() && path != null && !path.isEmpty();
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
-        dialog.hide();
-        dialog.dismiss();
+    protected void onPostExecute(@NonNull Boolean result) {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.hide();
+            dialog.dismiss();
+        }
+
+        Activity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
 
         if (result) {
             NinjaToast.show(context, context.getString(R.string.toast_export_successful) + path);

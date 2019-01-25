@@ -1,15 +1,14 @@
 package de.baumann.browser.Task;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DownloadManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
@@ -31,20 +31,18 @@ import de.baumann.browser.Unit.ViewUnit;
 import de.baumann.browser.View.NinjaToast;
 import de.baumann.browser.View.NinjaWebView;
 
-@SuppressLint("StaticFieldLeak")
 public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
-    private final Context context;
-    private final NinjaWebView webView;
+    private final WeakReference<AppCompatActivity> referenceContext;
+    private final WeakReference<NinjaWebView> referenceWebView;
     private int windowWidth;
     private float contentHeight;
     private String title;
     private String path;
-    private AppCompatActivity activity;
     private BottomSheetDialog dialog;
 
-    public ScreenshotTask(@NonNull Context context, @NonNull NinjaWebView webView) {
-        this.context = context;
-        this.webView = webView;
+    public ScreenshotTask(@NonNull AppCompatActivity context, @NonNull NinjaWebView webView) {
+        this.referenceContext = new WeakReference<>(context);
+        this.referenceWebView = new WeakReference<>(webView);
         this.windowWidth = 0;
         this.contentHeight = 0f;
         this.title = null;
@@ -53,11 +51,19 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        activity = (AppCompatActivity) context;
-        NinjaToast.show(activity, context.getString(R.string.toast_wait_a_minute));
+        AppCompatActivity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
 
-        dialog = new BottomSheetDialog(activity);
-        View dialogView = View.inflate(activity, R.layout.dialog_progress, null);
+        NinjaWebView webView = referenceWebView.get();
+        if (webView == null) {
+            return;
+        }
+
+        NinjaToast.show(context, context.getString(R.string.toast_wait_a_minute));
+        dialog = new BottomSheetDialog(context);
+        View dialogView = View.inflate(context, R.layout.dialog_progress, null);
         AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
         textView.setText(context.getString(R.string.toast_wait_a_minute));
         dialog.setContentView(dialogView);
@@ -72,22 +78,33 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
             contentHeight = webView.getContentHeight() * ViewUnit.getDensity(context);
             title = HelperUnit.fileName(webView.getUrl());
         } catch (Throwable e) {
-            NinjaToast.show(activity, context.getString(R.string.toast_error));
+            NinjaToast.show(context, context.getString(R.string.toast_error));
         }
     }
 
     @Override
+    @NonNull
     protected Boolean doInBackground(Void... params) {
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
+        AppCompatActivity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return false;
+        }
+
+        NinjaWebView webView = referenceWebView.get();
+        if (webView == null) {
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int hasWRITE_EXTERNAL_STORAGE = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
                 NinjaToast.show(context, R.string.toast_permission_sdCard_sec);
-                HelperUnit.grantPermissionsStorage(activity);
+                HelperUnit.grantPermissionsStorage(context);
             } else {
                 try {
                     Bitmap bitmap = ViewUnit.capture(webView, windowWidth, contentHeight, Bitmap.Config.ARGB_8888);
                     path = BrowserUnit.screenshot(context, bitmap, title);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     path = null;
                 }
             }
@@ -104,7 +121,12 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(@NonNull Boolean result) {
+        AppCompatActivity context = referenceContext.get();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+
         if (result) {
             dialog.cancel();
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -114,7 +136,7 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
 
                 if (pathFile.exists()) {
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.setType("image/*");
+                    sharingIntent.setType("im age/*");
                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
                     sharingIntent.putExtra(Intent.EXTRA_TEXT, path);
                     Uri bmpUri = Uri.fromFile(pathFile);
@@ -123,13 +145,13 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
                     sp.edit().putBoolean("delete_screenshot", true).apply();
                 }
             } else {
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
-                View dialogView = View.inflate(activity, R.layout.dialog_action, null);
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+                View dialogView = View.inflate(context, R.layout.dialog_action, null);
                 AppCompatTextView textView = dialogView.findViewById(R.id.dialog_text);
                 textView.setText(R.string.toast_downloadComplete);
                 MaterialButton action_ok = dialogView.findViewById(R.id.action_ok);
                 action_ok.setOnClickListener(view -> {
-                    activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+                    context.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
                     bottomSheetDialog.cancel();
                 });
                 MaterialButton action_cancel = dialogView.findViewById(R.id.action_cancel);
@@ -138,7 +160,7 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
                 bottomSheetDialog.show();
             }
         } else {
-            NinjaToast.show(activity, context.getString(R.string.toast_error));
+            NinjaToast.show(context, context.getString(R.string.toast_error));
         }
     }
 }
