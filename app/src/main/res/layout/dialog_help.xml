@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?android:attr/colorBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:ignore="ContentDescription"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -36,7 +36,7 @@
                 android:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_start"
+                app:srcCompat="@drawable/help_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:src="@drawable/help_startsite"
+                app:srcCompat="@drawable/help_startsite"
                 android:scaleType="fitCenter" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -76,7 +76,7 @@
                 android:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_menu"
+                app:srcCompat="@drawable/help_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -97,7 +97,7 @@
                 android:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_toggle"
+                app:srcCompat="@drawable/help_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -118,7 +118,7 @@
                 android:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_not"
+                app:srcCompat="@drawable/help_not"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -140,7 +140,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_nav"
+                app:srcCompat="@drawable/help_nav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -161,7 +161,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/help_set"
+                app:srcCompat="@drawable/help_set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -198,9 +198,9 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="4dp"
-                        android:background="?attr/actionBarItemBackground"
-                        android:contentDescription="@null"
-                        android:src="@drawable/icon_settings" />
+                        android:background="?attr/selectableItemBackground"
+
+                        app:srcCompat="@drawable/icon_settings" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/floatButton_ok"
@@ -209,9 +209,9 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="4dp"
-                        android:background="?attr/actionBarItemBackground"
-                        android:contentDescription="@null"
-                        android:src="@drawable/check_white" />
+                        android:background="?attr/selectableItemBackground"
+
+                        app:srcCompat="@drawable/check" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

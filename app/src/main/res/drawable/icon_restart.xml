@@ -1,8 +1,10 @@
-<!-- drawable/restart.xml -->
+<!--drawable/restart.xml-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="24dp"
     android:width="24dp"
+    android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <path android:fillColor="?android:attr/textColorSecondary" android:pathData="M11,4C13.05,4 15.09,4.77 16.65,6.33C19.78,9.46 19.77,14.5 16.64,17.64C14.81,19.5 12.3,20.24 9.91,19.92L10.44,17.96C12.15,18.12 13.93,17.54 15.24,16.23C17.58,13.89 17.58,10.09 15.24,7.75C14.06,6.57 12.53,6 11,6V10.58L6.04,5.63L11,0.68V4M5.34,17.65C2.7,15 2.3,11 4.11,7.94L5.59,9.41C4.5,11.64 4.91,14.39 6.75,16.23C7.27,16.75 7.87,17.16 8.5,17.45L8,19.4C7,19 6.12,18.43 5.34,17.65Z" />
+    <path
+        android:fillColor="?attr/colorOnPrimary"
+        android:pathData="M11 4c2.05 0 4.09 0.77 5.65 2.33 3.13 3.13 3.12 8.17-0.01 11.31-1.83 1.86-4.34 2.6-6.73 2.28l0.53-1.96c1.71 0.16 3.49-0.42 4.8-1.73 2.34-2.34 2.34-6.14 0-8.48C14.06 6.57 12.53 6 11 6v4.58L6.04 5.63 11 0.68V4M5.34 17.65C2.7 15 2.3 11 4.11 7.94l1.48 1.47c-1.09 2.23-0.68 4.98 1.16 6.82 0.52 0.52 1.12 0.93 1.75 1.22L8 19.4c-1-0.4-1.88-0.97-2.66-1.75z" />
 </vector>

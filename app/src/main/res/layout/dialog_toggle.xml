@@ -52,7 +52,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_block" />
+                    app:srcCompat="@drawable/icon_block" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_toStartOf="@+id/switch_adBlock"
-                    android:background="?attr/actionBarItemBackground"
+                    android:background="?attr/selectableItemBackground"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_action_close_red" />
 
@@ -101,7 +101,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_java"/>
+                    app:srcCompat="@drawable/icon_java" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_toStartOf="@+id/switch_js"
-                    android:background="?attr/actionBarItemBackground"
+                    android:background="?attr/selectableItemBackground"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_action_close_red"/>
 
@@ -151,7 +151,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_cookie"/>
+                    app:srcCompat="@drawable/icon_cookie" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_toStartOf="@+id/switch_cookie"
-                    android:background="?attr/actionBarItemBackground"
+                    android:background="?attr/selectableItemBackground"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_action_close_red"/>
 
@@ -201,7 +201,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_history"/>
+                    app:srcCompat="@drawable/icon_history" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -238,7 +238,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_location"/>
+                    app:srcCompat="@drawable/icon_location" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -282,7 +282,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_image"/>
+                    app:srcCompat="@drawable/icon_image" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -319,7 +319,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_remote"/>
+                    app:srcCompat="@drawable/icon_remote" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -356,7 +356,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_night"/>
+                    app:srcCompat="@drawable/icon_night" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -393,7 +393,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icon_size"/>
+                    app:srcCompat="@drawable/icon_size" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -418,9 +418,9 @@
                         android:paddingBottom="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="?attr/actionBarItemBackground"
+                        android:background="?attr/selectableItemBackground"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/icon_minus"/>
+                        app:srcCompat="@drawable/icon_minus" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/font_text"
@@ -436,9 +436,9 @@
                         android:paddingBottom="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="?attr/actionBarItemBackground"
+                        android:background="?attr/selectableItemBackground"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/icon_minus"/>
+                        app:srcCompat="@drawable/icon_minus" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -454,8 +454,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:textColor="?attr/colorAccent"
                     android:background="?attr/selectableItemBackground"
-                    android:textColor="@color/colorAccent"
                     android:text="@string/app_ok"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -463,8 +463,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/action_ok"
+                    android:textColor="?attr/colorAccent"
                     android:background="?attr/selectableItemBackground"
-                    android:textColor="@color/colorAccent"
                     android:text="@string/app_cancel"/>
 
             </RelativeLayout>

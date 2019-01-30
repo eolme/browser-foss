@@ -3,14 +3,11 @@
 
     <!-- Search engine -->
     <string-array name="setting_entries_search_engine">
-        <item>@string/setting_summary_search_engine_startpage</item>
-        <item>@string/setting_summary_search_engine_startpage_de</item>
-        <item>@string/setting_summary_search_engine_baidu</item>
-        <item>@string/setting_summary_search_engine_bing</item>
-        <item>@string/setting_summary_search_engine_duckduckgo</item>
         <item>@string/setting_summary_search_engine_google</item>
-        <item>@string/setting_summary_search_engine_searx</item>
-        <item>@string/setting_summary_search_engine_qwant</item>
+        <item>@string/setting_summary_search_engine_yandex</item>
+        <item>@string/setting_summary_search_engine_baidu</item>
+        <item>@string/setting_summary_search_engine_duckduckgo</item>
+        <item>@string/setting_summary_search_engine_mailru</item>
         <item>@string/setting_summary_search_engine_custom</item>
     </string-array>
 
@@ -21,12 +18,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
     </string-array>
-
-    <!-- Rendering -->
 
     <!-- User agent -->
     <string-array name="setting_entries_nav_pos">
@@ -109,17 +101,17 @@
 
     <!-- Font size -->
     <string-array name="setting_entries_font">
-        <item>Normal (100%)</item>
-        <item>Big (125%)</item>
-        <item>Bigger (150%)</item>
-        <item>Biggest (175%)</item>
+        <item>Small (75%)</item>
+        <item>Default (100%)</item>
+        <item>Large (125%)</item>
+        <item>Largest (150%)</item>
     </string-array>
 
     <string-array name="setting_values_font">
+        <item>75</item>
         <item>100</item>
         <item>125</item>
         <item>150</item>
-        <item>175</item>
     </string-array>
 
 </resources>

@@ -3,13 +3,11 @@
 
     <string name="changelog_title">Changelog</string>
     <string name="changelog_dialog">
-        &lt;i>Project site: https://github.com/scoute-dich/Browser&lt;br>
-        Changelog: https://github.com/scoute-dich/browser/blob/master/CHANGELOG.md&lt;/i>&lt;br>&lt;br>
+        &lt;i>Project site: https://github.com/eolme/browser-suze&lt;br>
+        Changelog: https://github.com/eolme/browser-suze/blob/master/CHANGELOG.md&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>Version: 6.2&lt;/b>&lt;br>
-        \u25AA new: advanced gesture settings&lt;br>
-        \u25AA new: show overview on start&lt;br>
-        \u25AA fix: light settings theme
+        &lt;b>Version: 1.0.0&lt;/b>&lt;br>
+        \u25AA First release
     </string>
 
     <string name="overview_title">Overview</string>
@@ -39,10 +37,9 @@
 
     <string name="settings_dialog">There are even more options in the settings. Try it out!</string>
 
-
-    <string name="license_title">Copyright © 2017  by Gaukler Faun</string>
+    <string name="license_title">Copyright © 2019 by Petrov Anton</string>
     <string name="license_dialog">
-        &lt;i>For more information visit the project site on Github: https://github.com/scoute-dich/Browser&lt;/i>&lt;br>&lt;br>
+        &lt;i>For more information visit the project site on Github: https://github.com/eolme/browser-suze&lt;/i>&lt;br>&lt;br>
 
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -85,101 +82,7 @@
         &lt;i>https://github.com/hummatli/SimpleEncryptionLib</string>
 
     <string name="cont_dialog">
-        &lt;i>First I would like to thank all people who contributed in any way on this project. They submitted issues,
-        translated or helped in any other way. On following sites you can become a active member of this
-        great community:&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>XDA-thread:&lt;/b>&lt;br>
-        XDA is a great community for developers and smartphone enthusiasts. Here you can report issues, ask for new features
-        and everything other related to \"FOSS Browser\".&lt;br>
-        &lt;i>https://forum.xda-developers.com/android/apps-games/app-browser-t3500091&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Github:&lt;/b>&lt;br>
-        On Github you can see the source code of \"FOSS Browser\". This is the more technical solution: open issues, ask for new
-        features or even help developing or translating.&lt;br>
-        &lt;i>https://github.com/scoute-dich/browser&lt;/i>&lt;br>&lt;br>&lt;br>
-
-
-        &lt;i>Following people contributed at this project. If I have forgotten anybody, please contact me:&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Gaukler Faun&lt;/b>&lt;br>
-        \u25AA Main developer and initiator of this project&lt;br>
-        &lt;i>https://github.com/scoute-dich&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>CGSLURP LLC&lt;/b>&lt;br>
-        \u25AA Helped to implement AdBlock and \"request desktop site\" in the previous version of \"FOSS Browser\".&lt;br>
-        &lt;i>https://github.com/futrDevelopment&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>element54&lt;/b>&lt;br>
-        \u25AA fix: keyboard problems (issue #105)&lt;br>
-        \u25AA new: option to disable confirmation dialogs on exit&lt;br>
-        &lt;i>https://github.com/element54&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>elmru&lt;/b>&lt;br>
-        \u25AA Taiwan Trad. Chinese Translation&lt;br>
-        &lt;i>https://github.com/kogiokka&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Enrico Monese&lt;/b>&lt;br>
-        \u25AA Italian Translation&lt;br>
-        &lt;i>https://github.com/EnricoMonese&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>gh-pmjm&lt;/b>&lt;br>
-        \u25AA Polish translation&lt;br>
-        &lt;i>https://github.com/gh-pmjm&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>gr1sh&lt;/b>&lt;br>
-        \u25AA fix: some German strings (issues #124, #131)&lt;br>
-        &lt;i>https://github.com/gr1sh&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Harry Heights&lt;/b>&lt;br>
-        \u25AA Documentation of FOSS Browser&lt;br>
-        &lt;i>https://github.com/HarryHeights&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Heimen Stoffels&lt;/b>&lt;br>
-        \u25AA Dutch translation&lt;br>
-        &lt;i>https://github.com/Vistaus&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Hellohat&lt;/b>&lt;br>
-        \u25AA French translation&lt;br>
-        &lt;i>https://github.com/Hellohat&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Herman Nunez&lt;/b>&lt;br>
-        \u25AA Spanish translation&lt;br>
-        &lt;i>https://github.com/junior012&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Jumping Yang&lt;/b>&lt;br>
-        \u25AA Chinese translation in the previous version of \"FOSS Browser\"&lt;br>
-        &lt;i>https://github.com/JumpingYang001&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>lishoujun&lt;/b>&lt;br>
-        \u25AA Chinese translation&lt;br>
-        \u25AA bug hunting&lt;br>
-        &lt;i>https://github.com/lishoujun&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Secangkir Kopi&lt;/b>&lt;br>
-        \u25AA Indonesian translation&lt;br>
-        &lt;i>https://github.com/Secangkir-Kopi&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Sérgio Marques&lt;/b>&lt;br>
-        \u25AA Portuguese translation&lt;br>
-        &lt;i>https://github.com/smarquespt&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>splinet&lt;/b>&lt;br>
-        \u25AA Russian translation in the previous version of \"FOSS Browser\"&lt;br>
-        &lt;i>https://github.com/splinet&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>SkewedZeppelin&lt;/b>&lt;br>
-        \u25AA Add option to enable Save-Data header&lt;br>
-        &lt;i>https://github.com/SkewedZeppelin&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Vladimir Kosolapov&lt;/b>&lt;br>
-        \u25AA Russian translation&lt;br>
-        &lt;i>https://github.com/0x264f&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>YC L&lt;/b>&lt;br>
-        \u25AA Chinese Translation&lt;br>
-        &lt;i>https://github.com/smallg0at&lt;/i>
-        
     </string>
 
 </resources>

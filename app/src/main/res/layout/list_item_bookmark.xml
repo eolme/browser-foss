@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/layout_margin_12dp"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ib_icon"
-        android:layout_width="24dp"
+        android:layout_width="12dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:contentDescription="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/circle_red" />
+        app:srcCompat="@drawable/circle_red" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/record_item_title"

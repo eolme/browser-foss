@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:orientation="vertical"
     android:background="?android:attr/colorBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,9 +61,9 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="4dp"
-                        android:background="?attr/actionBarItemBackground"
-                        android:contentDescription="@null"
-                        android:src="@drawable/icon_help" />
+                        android:background="?attr/selectableItemBackground"
+
+                        app:srcCompat="@drawable/icon_help" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/floatButton_settings"
@@ -72,9 +72,9 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="4dp"
-                        android:background="?attr/actionBarItemBackground"
-                        android:contentDescription="@null"
-                        android:src="@drawable/icon_settings" />
+                        android:background="?attr/selectableItemBackground"
+
+                        app:srcCompat="@drawable/icon_settings" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/floatButton_ok"
@@ -83,9 +83,9 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="4dp"
-                        android:background="?attr/actionBarItemBackground"
-                        android:contentDescription="@null"
-                        android:src="@drawable/check_white" />
+                        android:background="?attr/selectableItemBackground"
+
+                        app:srcCompat="@drawable/check" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -3,10 +3,10 @@
 
     <!-- Font size -->
     <string-array name="setting_entries_font">
-        <item>Нормальный (100%)</item>
-        <item>Большой (125%)</item>
-        <item>Ещё больше (150%)</item>
-        <item>Самый большой (175%)</item>
+        <item>Мелкий (75%)</item>
+        <item>По умолчанию (100%)</item>
+        <item>Крупный (125%)</item>
+        <item>Максимальный (150%)</item>
     </string-array>
 
 </resources>

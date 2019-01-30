@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_margin_56dp"
     android:minHeight="@dimen/layout_margin_56dp"
     android:orientation="vertical"
-    android:background="?android:attr/colorBackground"
-    android:layout_alignParentBottom="true"
-    tools:ignore="Overdraw">
+    android:layout_alignParentBottom="true">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_text"
@@ -29,8 +25,6 @@
             android:layout_alignParentEnd="true"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="@color/colorAccent"
             android:text="@string/app_ok"/>
 
         <com.google.android.material.button.MaterialButton
@@ -40,8 +34,6 @@
             android:layout_toStartOf="@+id/action_ok"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="@color/colorAccent"
             android:text="@string/app_cancel"/>
 
     </RelativeLayout>

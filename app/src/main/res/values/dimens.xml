@@ -12,5 +12,6 @@
     <dimen name="layout_margin_12dp">12dp</dimen>
     <dimen name="layout_margin_8dp">8dp</dimen>
 
+    <dimen name="layout_default_radius">2dp</dimen>
 
 </resources>

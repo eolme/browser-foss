@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="?android:attr/colorBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ContentDescription">
@@ -45,12 +44,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_red" />
+                    app:srcCompat="@drawable/circle_red" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_red"
@@ -73,12 +71,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_pink" />
+                    app:srcCompat="@drawable/circle_pink" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_pink"
@@ -101,12 +98,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_purple" />
+                    app:srcCompat="@drawable/circle_purple" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_purple"
@@ -129,12 +125,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_blue" />
+                    app:srcCompat="@drawable/circle_blue" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_blue"
@@ -156,12 +151,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_teal" />
+                    app:srcCompat="@drawable/circle_teal" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_teal"
@@ -184,12 +178,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_green" />
+                    app:srcCompat="@drawable/circle_green" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_green"
@@ -211,12 +204,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_lime" />
+                    app:srcCompat="@drawable/circle_lime" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_lime"
@@ -239,12 +231,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_yellow" />
+                    app:srcCompat="@drawable/circle_yellow" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_yellow"
@@ -267,12 +258,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_orange" />
+                    app:srcCompat="@drawable/circle_orange" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_orange"
@@ -295,12 +285,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_brown" />
+                    app:srcCompat="@drawable/circle_brown" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_brown"
@@ -323,12 +312,11 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="24dp"
+                    android:layout_width="12dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/circle_grey" />
+                    app:srcCompat="@drawable/circle_grey" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="@string/color_grey"

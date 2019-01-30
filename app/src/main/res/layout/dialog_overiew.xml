@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:background="?android:attr/colorBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,8 +26,8 @@
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
-            android:background="?attr/actionBarItemBackground"
-            android:src="@drawable/icon_arrow_left"/>
+            android:background="?attr/selectableItemBackground"
+            app:srcCompat="@drawable/icon_arrow_left" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/overview_title"
@@ -50,8 +50,8 @@
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
-            android:background="?attr/actionBarItemBackground"
-            android:src="@drawable/icon_arrow_right" />
+            android:background="?attr/selectableItemBackground"
+            app:srcCompat="@drawable/icon_arrow_right" />
 
     </RelativeLayout>
 
@@ -61,17 +61,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_ScrollView">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toStartOf="@+id/tab_toggle"
-            android:background="?android:attr/colorButtonNormal" />
-
         <androidx.appcompat.widget.AppCompatImageButton
             android:visibility="gone"
             android:layout_centerInParent="true"
@@ -79,19 +68,8 @@
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:background="?attr/actionBarItemBackground"
-            android:src="@drawable/icon_arrow_down_gest" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toEndOf="@+id/tab_toggle"
-            android:background="?android:attr/colorButtonNormal" />
+            android:background="?attr/selectableItemBackground"
+            app:srcCompat="@drawable/icon_arrow_down" />
 
     </RelativeLayout>
 
@@ -122,55 +100,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                android:src="@drawable/icon_plus"
-                android:background="?attr/actionBarItemBackground"/>
+                android:background="?attr/selectableItemBackground"
+                app:srcCompat="@drawable/icon_plus" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </HorizontalScrollView>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_below="@+id/tab_hide"
         android:layout_above="@+id/home_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <View
-            android:layout_alignParentTop="true"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/shadow_below"/>
+            android:layout_height="match_parent">
 
-        <org.askerov.dynamicgrid.DynamicGridView
-            android:fastScrollEnabled="true"
-            android:visibility="gone"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:paddingTop="4dp"
-            android:id="@+id/home_grid_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:stretchMode="columnWidth"
-            android:numColumns="auto_fit" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_grid_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <ListView
-            android:fastScrollEnabled="true"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:visibility="gone"
-            android:id="@+id/home_list_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" />
+            <ListView
+                android:id="@+id/home_list_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:fastScrollEnabled="true"
+                android:gravity="center"
+                android:visibility="gone" />
 
-        <View
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/shadow_above"/>
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_alignParentBottom="true"
@@ -193,7 +157,7 @@
                 android:id="@+id/open_newTabView"
                 android:layout_width="42dp"
                 android:layout_height="2dp"
-                android:background="@color/colorAccent"
+                android:background="?attr/colorAccent"
                 android:visibility="visible"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -203,8 +167,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
-                android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/icon_earth" />
+                android:background="?attr/selectableItemBackground"
+                app:srcCompat="@drawable/icon_earth" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -219,7 +183,7 @@
                 android:id="@+id/open_bookmarkView"
                 android:layout_width="42dp"
                 android:layout_height="2dp"
-                android:background="@color/colorAccent"
+                android:background="?attr/colorAccent"
                 android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -229,8 +193,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
-                android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/icon_bookmark" />
+                android:background="?attr/selectableItemBackground"
+                app:srcCompat="@drawable/icon_bookmark" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -245,7 +209,7 @@
                 android:id="@+id/open_historyView"
                 android:layout_width="42dp"
                 android:layout_height="2dp"
-                android:background="@color/colorAccent"
+                android:background="?attr/colorAccent"
                 android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -255,8 +219,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
-                android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/ic_action_history" />
+                android:background="?attr/selectableItemBackground"
+                app:srcCompat="@drawable/ic_action_history" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -270,7 +234,7 @@
             <View
                 android:layout_width="42dp"
                 android:layout_height="2dp"
-                android:background="@color/colorAccent"
+                android:background="?attr/colorAccent"
                 android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -280,8 +244,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
-                android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/icon_dots" />
+                android:background="?attr/selectableItemBackground"
+                app:srcCompat="@drawable/icon_dots" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

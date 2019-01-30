@@ -6,12 +6,12 @@
     <string name="album_title_home">Home</string>
     <string name="album_untitled"> </string>
     <string name="app_cancel">Cancel</string>
-    <string name="app_name">FOSS Browser</string>
+    <string name="app_name">Suze Browser</string>
     <string name="app_ok">OK</string>
     <string name="clear_menu_done_all">Done all</string>
     <string name="clear_summary">All files will be exported to the \"Documents\" directory of your sd-card. Each export will overwrite the old one. To restore there must be a file with the right name in the directory.</string>
     <string name="clear_summary_deleteDatabase">Delete the whole database (Startpage, bookmarks, history and all whitelists).</string>
-    <string name="clear_summary_quit">Every time you quit \"FOSS Browser\" all above checked data will be deleted.</string>
+    <string name="clear_summary_quit">Every time you quit \"Suze Browser\" all above checked data will be deleted.</string>
     <string name="clear_title_cache">Clear Cache</string>
     <string name="clear_title_cookie">Clear Cookies</string>
     <string name="clear_title_deleteDatabase">Delete database</string>
@@ -29,13 +29,11 @@
     <string name="color_red">Red</string>
     <string name="color_teal">Teal</string>
     <string name="color_yellow">Yellow</string>
-    <string name="dialog_button_custom">Custom</string>
     <string name="dialog_content_resubmission">Would you like to resubmit your data?</string>
     <string name="dialog_content_ssl_error">The certificate of the site is not trusted. Proceed anyway?</string>
     <string name="dialog_extension_hint">Extension (for example: \".jpg\"):</string>
     <string name="dialog_icon_hint">You can also filter your bookmarks, by long pressing the bookmark icon. To reset filters just press the icon once again.</string>
     <string name="dialog_icon_title">Choose an icon</string>
-    <string name="dialog_se_hint">https://www.google.com/search?q=</string>
     <string name="dialog_sign_in_password">Password</string>
     <string name="dialog_sign_in_username">Username</string>
     <string name="dialog_sortIcon">Sort by icon</string>
@@ -110,7 +108,7 @@
     <string name="setting_overView_onStart_summary">Open the \"Overview\" on every app start.</string>
     <string name="setting_overView_onStart_title">Show on start</string>
     <string name="setting_summary_adblock">Enable AdBlock to block annoying ads. Sites also load faster when enabled.</string>
-    <string name="setting_summary_appSettings">Open the system app settings for \"FOSS Browser\". There you can, depending on your Android version grant permissions, clear the app data and so on.</string>
+    <string name="setting_summary_appSettings">Open the system app settings for \"Suze Browser\". There you can, depending on your Android version grant permissions, clear the app data and so on.</string>
     <string name="setting_summary_background">Display a notification and open links in background. If disabled links will open immediately.</string>
     <string name="setting_summary_changelog">Show the latest changelog to see what\'s new.</string>
     <string name="setting_summary_clear_control">Clear your browser data or decide what data will be cleared when you leave the application.</string>
@@ -127,7 +125,7 @@
     <string name="setting_summary_images">Enable Network images. Disabling could be useful to save mobile data and to load websites faster.</string>
     <string name="setting_summary_inverted">If checked, content will be rendered in a inverted grey scale mode. This is a kind of \"night mode\".</string>
     <string name="setting_summary_javascript">Enable JavaScript. Many websites need JavaScript for their functionality (menus, loading and displaying images, …). But they are also a risk and can be used for attacks.</string>
-    <string name="setting_summary_license">\"FOSS Browser\" is completely free (as in freedom) and open source.</string>
+    <string name="setting_summary_license">\"Suze Browser\" is completely free (as in freedom) and open source.</string>
     <string name="setting_summary_location">Allow websites to access your location. Some websites (like Google maps for navigation) need this enabled.</string>
     <string name="setting_summary_nav_pos">Decide where the \"Navigation Button\" will be placed.</string>
     <string name="setting_summary_nav_pos_center">Center</string>
@@ -138,14 +136,11 @@
     <string name="setting_summary_save_data">Tell websites that you would prefer to save data. Supported websites will load faster.</string>
     <string name="setting_summary_search_engine">Here you can choose your preferred search engine or set a custom one.</string>
     <string name="setting_summary_search_engine_baidu">Baidu</string>
-    <string name="setting_summary_search_engine_bing">Bing</string>
     <string name="setting_summary_search_engine_custom">Custom</string>
-    <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="setting_summary_search_engine_duckduckgo" translatable="false">DuckDuckGo</string>
     <string name="setting_summary_search_engine_google">Google</string>
-    <string name="setting_summary_search_engine_qwant">Qwant</string>
-    <string name="setting_summary_search_engine_searx">Searx</string>
-    <string name="setting_summary_search_engine_startpage">StartPage</string>
-    <string name="setting_summary_search_engine_startpage_de">StartPage (de)</string>
+    <string name="setting_summary_search_engine_yandex">Yandex</string>
+    <string name="setting_summary_search_engine_mailru" translatable="false">Mail.ru</string>
     <string name="setting_summary_start_control">Decide which components of the browser will be enabled on start.</string>
     <string name="setting_summary_tab">What should be shown at the start of the \"Overview\"? The Start Page, you bookmarks, …</string>
     <string name="setting_summary_themeDark">You like it a little bit brighter? Do it!</string>
@@ -188,6 +183,8 @@
     <string name="setting_title_save_data">Request \'Save Data\'</string>
     <string name="setting_title_search_engine">Search Engine</string>
     <string name="setting_title_start_control">Start Control</string>
+    <string name="setting_title_reopenLastTab">Reopen last tab</string>
+    <string name="setting_summary_reopenLastTab">Reopen a new tab when the last tab is closed instead of exiting the browser.</string>
     <string name="setting_title_themeDark">Light theme</string>
     <string name="setting_title_toolbar">Toolbar</string>
     <string name="setting_title_ui">Behavior/UI</string>
@@ -204,6 +201,7 @@
     <string name="toast_closeNotification">Close all opened websites.</string>
     <string name="toast_close_tab">Do you want to close current tab?</string>
     <string name="toast_copy_successful">Successfully copied</string>
+    <string name="toast_copy_failed">Error at text copying</string>
     <string name="toast_delete_successful">Successfully deleted</string>
     <string name="toast_domain_already_exists">Domain already exists</string>
     <string name="toast_downloadComplete">Download complete. Open file manager?</string>
@@ -220,13 +218,13 @@
     <string name="toast_load_in_background">Loading in background</string>
     <string name="toast_newTitle">Entry already exists. Please enter new title.</string>
     <string name="toast_new_tab_successful">Successfully opened in a new tab</string>
-    <string name="toast_permission_loc">\"FOSS Browser\" needs the permission to \"access your location\". This is requested from some websites for example when they offer some kind of navigation. If you don\'t grant the permission yet, you can do it later in the settings.</string>
-    <string name="toast_permission_sdCard">\"FOSS Browser\" needs the permission to \"read and write on your storage\". This is needed for downloading files, the build in file manager and taking screenshots. If you don\'t grant the permission yet, you can do it later in the settings.</string>
+    <string name="toast_permission_loc">\"Suze Browser\" needs the permission to \"access your location\". This is requested from some websites for example when they offer some kind of navigation. If you don\'t grant the permission yet, you can do it later in the settings.</string>
+    <string name="toast_permission_sdCard">\"Suze Browser\" needs the permission to \"read and write on your storage\". This is needed for downloading files, the build in file manager and taking screenshots. If you don\'t grant the permission yet, you can do it later in the settings.</string>
     <string name="toast_permission_sdCard_sec">Please grant the permission to \"read and write on your storage\" in the settings.</string>
     <string name="toast_permission_title">Permission is needed</string>
-    <string name="toast_quit">Do you want to quit \"FOSS Browser\"?</string>
+    <string name="toast_quit">Do you want to quit \"Suze Browser\"?</string>
     <string name="toast_relayout_successful">Successfully Relayout</string>
-    <string name="toast_restart">You must restart \"FOSS Browser\" to apply changes. Close now?</string>
+    <string name="toast_restart">You must restart \"Suze Browser\" to apply changes. Close now?</string>
     <string name="toast_share_failed">Can\'t share this page</string>
     <string name="toast_start_download">Starting download</string>
     <string name="toast_titleConfirm_delete">Do you really want to delete the entry?</string>

@@ -33,6 +33,13 @@
         android:entries="@array/setting_entries_font"
         android:entryValues="@array/setting_values_font"/>
 
+    <androidx.preference.CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/icon_tab_plus"
+        android:key="sp_reopenLastTab"
+        android:summary="@string/setting_summary_reopenLastTab"
+        android:title="@string/setting_title_reopenLastTab" />
+
     <androidx.preference.PreferenceCategory android:title="@string/setting_overView">
 
         <androidx.preference.CheckBoxPreference
@@ -52,7 +59,6 @@
             android:entryValues="@array/setting_values_tab" />
 
     </androidx.preference.PreferenceCategory>
-
 
     <androidx.preference.PreferenceCategory android:title="@string/setting_title_nav">
 

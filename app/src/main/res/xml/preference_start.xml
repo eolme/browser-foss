@@ -43,7 +43,6 @@
         android:title="@string/setting_title_inverted"
         android:summary="@string/setting_summary_inverted"/>
 
-
     <androidx.preference.PreferenceCategory android:title="@string/setting_title_adblock">
 
         <androidx.preference.CheckBoxPreference

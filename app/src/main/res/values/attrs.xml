@@ -2,6 +2,7 @@
 <resources>
 
     <attr name="colorPrimary" format="color" />
+    <attr name="colorOnPrimary" format="color" />
     <attr name="colorPrimaryDark" format="color" />
     <attr name="colorAccent_trans" format="color" />
 

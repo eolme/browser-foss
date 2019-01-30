@@ -9,8 +9,8 @@
         android:shortcutDisabledMessage="@string/album_title_home">
         <intent
             android:action="sc_startPage"
-            android:targetPackage="de.baumann.browser"
-            android:targetClass="de.baumann.browser.Activity.BrowserActivity" />
+            android:targetClass="website.petrov.browser.activity.BrowserActivity"
+            android:targetPackage="website.petrov.browser" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
@@ -23,8 +23,8 @@
         android:shortcutDisabledMessage="@string/album_title_bookmarks">
         <intent
             android:action="sc_bookmark"
-            android:targetPackage="de.baumann.browser"
-            android:targetClass="de.baumann.browser.Activity.BrowserActivity" />
+            android:targetClass="website.petrov.browser.activity.BrowserActivity"
+            android:targetPackage="website.petrov.browser" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
@@ -37,8 +37,8 @@
         android:shortcutDisabledMessage="@string/album_title_history">
         <intent
             android:action="sc_history"
-            android:targetPackage="de.baumann.browser"
-            android:targetClass="de.baumann.browser.Activity.BrowserActivity" />
+            android:targetClass="website.petrov.browser.activity.BrowserActivity"
+            android:targetPackage="website.petrov.browser" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 

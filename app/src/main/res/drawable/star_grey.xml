@@ -1,8 +1,10 @@
-<!-- drawable/star.xml -->
+<!--drawable/star.xml-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="24dp"
     android:width="24dp"
+    android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <path android:fillColor="?android:attr/textColorSecondary" android:pathData="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+    <path
+        android:fillColor="?attr/colorOnPrimary"
+        android:pathData="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-0.62L12 2 9.19 8.62 2 9.24l5.45 4.73L5.82 21 12 17.27z" />
 </vector>
