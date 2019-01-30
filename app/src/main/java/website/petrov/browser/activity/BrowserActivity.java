@@ -1899,7 +1899,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
                 Cursor row = (Cursor) listView.getItemAtPosition(position);
                 final String bookmarksIcon = row.getString(row.getColumnIndexOrThrow("pass_creation"));
-                row.close();
 
                 View v = super.getView(position, convertView, parent);
                 AppCompatImageView ivIcon = ViewCompat.requireViewById(v, R.id.ib_icon);
@@ -2189,8 +2188,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             bottomSheetDialog.show();
             return true;
         });
-
-        bookmarkCursor.close();
+        
         db.close();
     }
 

@@ -59,9 +59,8 @@ public class BookmarkList {
     }
 
     public void close() {
-        if (sqlDb != null && sqlDb.isOpen()) {
-            sqlDb.close();
-        }
+        DatabaseHelper dbHelper = new DatabaseHelper(c);
+        dbHelper.close();
     }
 
     //insert data
