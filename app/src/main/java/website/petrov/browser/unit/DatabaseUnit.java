@@ -29,12 +29,16 @@ public class DatabaseUnit {
     @NonNull
     public static String getSafeString(@NonNull Cursor cursor, @NonNull String name) {
         if (cursor.isClosed()) {
-            return "";
+            return ""; // Cursor is already closed
+        }
+        if (cursor.getPosition() == -1 && !cursor.moveToFirst()) {
+            return ""; // No data available
         }
         int column = cursor.getColumnIndex(name);
         if (column == -1) {
-            return "";
+            return ""; // Column not found
         }
-        return cursor.getString(column);
+        String cell = cursor.getString(column);
+        return cell == null ? "" : cell; // Column can be nullable
     }
 }
