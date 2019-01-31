@@ -1257,7 +1257,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             pinAlbums(HelperUnit.safeGetString(sp, "favoriteURL", "https://github.com/eolme/browser-suze"));
             showOverview();
             new Handler().postDelayed(() -> openBookmark.performClick(), mediumAnimTime);
-        } else if ("sc_startPage".equals(action)) {
+        } else if ("sc_start_page".equals(action)) {
             pinAlbums(HelperUnit.safeGetString(sp, "favoriteURL", "https://github.com/eolme/browser-suze"));
             showOverview();
             new Handler().postDelayed(() -> openStartPage.performClick(), mediumAnimTime);

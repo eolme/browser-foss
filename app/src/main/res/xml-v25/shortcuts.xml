@@ -1,14 +1,14 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
 
     <shortcut
-        android:shortcutId="sc_startPage"
+        android:shortcutId="sc_start_page"
         android:enabled="true"
         android:icon="@drawable/qc_start"
         android:shortcutShortLabel="@string/album_title_files"
         android:shortcutLongLabel="@string/album_title_home"
         android:shortcutDisabledMessage="@string/album_title_home">
         <intent
-            android:action="sc_startPage"
+            android:action="sc_start_page"
             android:targetClass="website.petrov.browser.activity.BrowserActivity"
             android:targetPackage="website.petrov.browser" />
         <categories android:name="android.shortcut.conversation" />
