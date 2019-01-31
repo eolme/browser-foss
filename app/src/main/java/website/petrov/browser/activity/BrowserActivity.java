@@ -49,6 +49,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -118,10 +119,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import website.petrov.browser.BuildConfig;
 import website.petrov.browser.R;
 import website.petrov.browser.browser.AdBlock;
@@ -137,6 +134,7 @@ import website.petrov.browser.service.ClearService;
 import website.petrov.browser.service.HolderService;
 import website.petrov.browser.task.ScreenshotTask;
 import website.petrov.browser.unit.BrowserUnit;
+import website.petrov.browser.unit.DatabaseUnit;
 import website.petrov.browser.unit.HelperUnit;
 import website.petrov.browser.unit.IntentUnit;
 import website.petrov.browser.unit.LayoutUnit;
@@ -394,8 +392,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     .apply();
         }
 
+        String key = HelperUnit.safeGetString(sp, "saved_key", "");
         try {
-            String key = HelperUnit.safeGetString(sp, "saved_key", "");
             mahEncryptor = SimpleEncryptor.newInstance(key);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException |
                 InvalidKeyException | UnsupportedEncodingException e) {
@@ -440,7 +438,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         dispatchIntent(getIntent());
 
         // show changelog
-
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             final String versionName = pInfo.versionName;
@@ -507,10 +504,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                return false;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                return false;
             case KeyEvent.KEYCODE_MENU:
                 return showOverflow();
             case KeyEvent.KEYCODE_BACK:
@@ -519,9 +512,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     return onHideCustomView();
                 }
                 return onKeyCodeBack();
+            case KeyEvent.KEYCODE_VOLUME_UP:
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            default:
+                return false;
         }
-
-        return false;
     }
 
     @Override
@@ -682,11 +677,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     @Override
     public void updateInputBox(@Nullable String query) {
-        if (query != null) {
-            inputBox.setText(query);
-        } else {
-            inputBox.setText(null);
-        }
+        inputBox.setText(query);
         inputBox.clearFocus();
     }
 
@@ -708,15 +699,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     public synchronized void showAlbum(@NonNull AlbumController controller) {
         if (currentAlbumController != null) {
             currentAlbumController.deactivate();
-            final View av = (View) controller;
-
-            contentFrame.removeAllViews();
-            contentFrame.addView(av);
-        } else {
-            contentFrame.removeAllViews();
-            contentFrame.addView((View) controller);
         }
-
+        contentFrame.removeAllViews();
+        contentFrame.addView((View) controller);
         currentAlbumController = controller;
         currentAlbumController.activate();
         updateOmnibox();
@@ -895,9 +880,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     private void showOverview() {
         bottomSheetDialogOverView.show();
-        if (currentAlbumController != null) {
-            new Handler().postDelayed(() -> tabScrollView.smoothScrollTo(currentAlbumController.getAlbumView().getLeft(), 0), shortAnimTime);
-        }
+        new Handler().postDelayed(() -> {
+            if (currentAlbumController != null) {
+                tabScrollView.smoothScrollTo(currentAlbumController.getAlbumView().getLeft(), 0);
+            }
+        }, shortAnimTime);
     }
 
     private void hideBottomSheetDialog() {
@@ -999,27 +986,31 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             case R.id.menu_saveBookmark:
                 hideBottomSheetDialog();
-                try {
-                    String key = HelperUnit.safeGetString(sp, "saved_key", "");
-                    SimpleEncryptor mahEncryptor = SimpleEncryptor.newInstance(key);
-                    String encryptedUserName = mahEncryptor.encode("");
-                    String encryptedUserPW = mahEncryptor.encode("");
 
-                    BookmarkList db = new BookmarkList(this);
-                    db.open();
-                    if (db.isExist(url)) {
-                        NinjaToast.show(this, R.string.toast_newTitle);
-                    } else {
-                        db.insert(HelperUnit.secString(ninjaWebView.getTitle()), url, encryptedUserName, encryptedUserPW, "01");
-                        NinjaToast.show(this, R.string.toast_edit_successful);
-                        initBookmarkList();
-                    }
-                } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException |
-                        BadPaddingException | UnsupportedEncodingException | InvalidKeySpecException |
-                        IllegalBlockSizeException e) {
+                String key = HelperUnit.safeGetString(sp, "saved_key", "");
+                String encryptedUserName;
+                String encryptedUserPW;
+
+                try {
+                    SimpleEncryptor mahEncryptor = SimpleEncryptor.newInstance(key);
+                    encryptedUserName = mahEncryptor.encode("");
+                    encryptedUserPW = mahEncryptor.encode("");
+                } catch (Throwable e) {
                     Log.e(TAG, "Bookmark", e);
                     NinjaToast.show(this, R.string.toast_error);
+                    return;
                 }
+
+                BookmarkList db = new BookmarkList(this);
+                db.open();
+                if (db.isExist(url)) {
+                    NinjaToast.show(this, R.string.toast_newTitle);
+                } else {
+                    db.insert(HelperUnit.secString(ninjaWebView.getTitle()), url, encryptedUserName, encryptedUserPW, "01");
+                    NinjaToast.show(this, R.string.toast_edit_successful);
+                    initBookmarkList();
+                }
+                db.close();
                 break;
 
             case R.id.menu_saveStart:
@@ -1188,7 +1179,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             case R.id.omnibox_refresh:
                 if (ninjaWebView.isLoadFinish()) {
-
                     if (!url.startsWith("https://")) {
                         bottomSheetDialog = new BottomSheetDialog(this);
                         View dialogView = View.inflate(this, R.layout.dialog_action, null);
@@ -1222,11 +1212,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private void printPDF(boolean share) {
         boolean success = true;
         try {
-            if (share) {
-                sp.edit().putBoolean("pdf_share", true).apply();
-            } else {
-                sp.edit().putBoolean("pdf_share", false).apply();
-            }
+            sp.edit().putBoolean("pdf_share", share).apply();
 
             String title = HelperUnit.fileName(ninjaWebView.getUrl());
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
@@ -1258,8 +1244,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         stopService(toHolderService);
 
         String action = intent.getAction();
-
-        if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_WEB_SEARCH)) {
+        if (action != null && action.equals(Intent.ACTION_WEB_SEARCH)) {
             // From ActionMode and some others
             pinAlbums(intent.getStringExtra(SearchManager.QUERY));
         } else if (filePathCallback != null) {
@@ -1889,8 +1874,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             bookmarkCursor = db.fetchDataByFilter(search, "pass_creation");
         }
 
-        if (bookmarkCursor == null) {
-            Log.e(TAG, "Cursor is null");
+        if (bookmarkCursor == null || bookmarkCursor.isClosed()) {
+            Log.e(TAG, "Cursor is unavailable");
+            db.close();
             return;
         }
 
@@ -1898,7 +1884,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             @Override
             public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
                 Cursor row = (Cursor) listView.getItemAtPosition(position);
-                final String bookmarksIcon = row.getString(row.getColumnIndexOrThrow("pass_creation"));
+                final String bookmarksIcon = DatabaseUnit.getSafeString(row, "pass_creation");
 
                 View v = super.getView(position, convertView, parent);
                 AppCompatImageView ivIcon = ViewCompat.requireViewById(v, R.id.ib_icon);
@@ -1911,52 +1897,40 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
-            try {
-                Cursor passCursor;
-                if (search.equals("00")) {
-                    passCursor = db.fetchAllData(this);
-                } else {
-                    passCursor = db.fetchDataByFilter(search, "pass_creation");
-                }
+            db.open();
 
-                if (passCursor == null) {
-                    Log.e(TAG, "Cursor is null");
-                    return;
-                }
-
-                final String passContent = passCursor.getString(passCursor.getColumnIndexOrThrow("pass_content"));
-                final String passIcon = passCursor.getString(passCursor.getColumnIndexOrThrow("pass_icon"));
-                final String passAttachment = passCursor.getString(passCursor.getColumnIndexOrThrow("pass_attachment"));
-
-                passCursor.close();
-
-                updateAlbum(passContent);
-                toastLogin(passIcon, passAttachment);
-                hideOverview();
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Bookmark cannot be fetched", e);
+            Cursor passCursor;
+            if (search.equals("00")) {
+                passCursor = db.fetchAllData(this);
+            } else {
+                passCursor = db.fetchDataByFilter(search, "pass_creation");
             }
+
+            if (passCursor == null) {
+                Log.e(TAG, "Cursor is null");
+                db.close();
+                return;
+            }
+
+            final String passContent = DatabaseUnit.getSafeString(passCursor, "pass_content");
+            final String passIcon = DatabaseUnit.getSafeString(passCursor, "pass_icon");
+            final String passAttachment = DatabaseUnit.getSafeString(passCursor, "pass_attachment");
+
+            db.close();
+
+            updateAlbum(passContent);
+            toastLogin(passIcon, passAttachment);
+            hideOverview();
         });
 
         listView.setOnItemLongClickListener((parent, view, position, id) -> {
-            String _id;
-            String passTitle;
-            String passContent;
-            String passIcon;
-            String passAttachment;
-            String passCreation;
-            try {
-                Cursor row1 = (Cursor) listView.getItemAtPosition(position);
-                _id = row1.getString(row1.getColumnIndexOrThrow("_id"));
-                passTitle = row1.getString(row1.getColumnIndexOrThrow("pass_title"));
-                passContent = row1.getString(row1.getColumnIndexOrThrow("pass_content"));
-                passIcon = row1.getString(row1.getColumnIndexOrThrow("pass_icon"));
-                passAttachment = row1.getString(row1.getColumnIndexOrThrow("pass_attachment"));
-                passCreation = row1.getString(row1.getColumnIndexOrThrow("pass_creation"));
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Column does not exist", e);
-                return true;
-            }
+            Cursor listRow = (Cursor) listView.getItemAtPosition(position);
+            String _id = DatabaseUnit.getSafeString(listRow, "_id");
+            String passTitle = DatabaseUnit.getSafeString(listRow, "pass_title");
+            String passContent = DatabaseUnit.getSafeString(listRow, "pass_content");
+            String passIcon = DatabaseUnit.getSafeString(listRow, "pass_icon");
+            String passAttachment = DatabaseUnit.getSafeString(listRow, "pass_attachment");
+            String passCreation = DatabaseUnit.getSafeString(listRow, "pass_creation");
 
             bottomSheetDialog = new BottomSheetDialog(this);
             View dialogView = View.inflate(this, R.layout.dialog_menu_context_list, null);
@@ -1985,181 +1959,200 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 hideBottomSheetDialog();
                 sp.edit().putString("favoriteURL", passContent).apply();
                 NinjaToast.show(this, R.string.toast_fav);
-
             });
 
             contextListEdit = ViewCompat.requireViewById(dialogView, R.id.menu_contextList_edit);
             contextListEdit.setVisibility(View.VISIBLE);
             contextListEdit.setOnClickListener(v -> {
                 hideBottomSheetDialog();
+
+                bottomSheetDialog = new BottomSheetDialog(this);
+
+                View dialogView1 = View.inflate(this, R.layout.dialog_edit_bookmark, null);
+
+                final AppCompatEditText passTitleET = ViewCompat.requireViewById(dialogView1, R.id.pass_title);
+                final AppCompatEditText passUserNameET = ViewCompat.requireViewById(dialogView1, R.id.pass_userName);
+                final AppCompatEditText passUserPWET = ViewCompat.requireViewById(dialogView1, R.id.pass_userPW);
+                final AppCompatEditText passURLET = ViewCompat.requireViewById(dialogView1, R.id.pass_url);
+                final AppCompatImageView ibIcon = ViewCompat.requireViewById(dialogView1, R.id.ib_icon);
+
                 try {
-                    bottomSheetDialog = new BottomSheetDialog(this);
-
-                    View dialogView1 = View.inflate(this, R.layout.dialog_edit_bookmark, null);
-
-                    final AppCompatEditText passTitleET = ViewCompat.requireViewById(dialogView1, R.id.pass_title);
-                    final AppCompatEditText passUserNameET = ViewCompat.requireViewById(dialogView1, R.id.pass_userName);
-                    final AppCompatEditText passUserPWET = ViewCompat.requireViewById(dialogView1, R.id.pass_userPW);
-                    final AppCompatEditText passURLET = ViewCompat.requireViewById(dialogView1, R.id.pass_url);
-                    final AppCompatImageView ibIcon = ViewCompat.requireViewById(dialogView1, R.id.ib_icon);
-
                     decryptedUserName = mahEncryptor.decode(passIcon);
                     decryptedUserPW = mahEncryptor.decode(passAttachment);
-
-                    passTitleET.setText(passTitle);
-                    passUserNameET.setText(decryptedUserName);
-                    passUserPWET.setText(decryptedUserPW);
-                    passURLET.setText(passContent);
-
-                    MaterialButton actionOk = ViewCompat.requireViewById(dialogView1, R.id.action_ok);
-                    actionOk.setOnClickListener(view1 -> {
-                        try {
-                            String inputPass_title = LayoutUnit.getText(passTitleET);
-                            String inputPass_url = LayoutUnit.getText(passURLET);
-
-                            String encryptedUserName = mahEncryptor.encode(LayoutUnit.getText(passUserNameET));
-                            String encryptedUserPW = mahEncryptor.encode(LayoutUnit.getText(passUserPWET));
-
-                            db.open();
-                            db.update(Integer.parseInt(_id),
-                                    HelperUnit.secString(inputPass_title),
-                                    HelperUnit.secString(inputPass_url),
-                                    HelperUnit.secString(encryptedUserName),
-                                    HelperUnit.secString(encryptedUserPW), passCreation);
-                            db.close();
-                            initBookmarkList();
-                            hideSoftInput(passTitleET);
-                            NinjaToast.show(this, R.string.toast_edit_successful);
-                        } catch (Throwable e) {
-                            Log.e(TAG, "Dialog", e);
-                            NinjaToast.show(this, R.string.toast_error);
-                        }
-                        hideBottomSheetDialog();
-                    });
-                    MaterialButton actionCancel = ViewCompat.requireViewById(dialogView1, R.id.action_cancel);
-                    actionCancel.setOnClickListener(view1 -> {
-                        hideSoftInput(passTitleET);
-                        hideBottomSheetDialog();
-                    });
-                    HelperUnit.switchIcon(this, passCreation, "pass_creation", ibIcon);
-                    bottomSheetDialog.setContentView(dialogView1);
-                    bottomSheetDialog.show();
-
-                    ibIcon.setOnClickListener(v1 -> {
-                        try {
-                            final String inputPass_title = LayoutUnit.getText(passTitleET);
-                            final String inputPass_url = LayoutUnit.getText(passURLET);
-                            final String encryptedUserName = mahEncryptor.encode(LayoutUnit.getText(passUserNameET));
-                            final String encryptedUserPW = mahEncryptor.encode(LayoutUnit.getText(passUserPWET));
-
-                            hideBottomSheetDialog();
-                            hideSoftInput(passTitleET);
-
-                            bottomSheetDialog = new BottomSheetDialog(this);
-                            View dialogView11 = View.inflate(this, R.layout.dialog_edit_icon, null);
-
-                            LinearLayoutCompat icon01 = ViewCompat.requireViewById(dialogView11, R.id.icon_01);
-                            icon01.setOnClickListener(v11 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "01");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon02 = ViewCompat.requireViewById(dialogView11, R.id.icon_02);
-                            icon02.setOnClickListener(v112 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "02");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon03 = ViewCompat.requireViewById(dialogView11, R.id.icon_03);
-                            icon03.setOnClickListener(v113 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "03");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon04 = ViewCompat.requireViewById(dialogView11, R.id.icon_04);
-                            icon04.setOnClickListener(v114 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "04");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon05 = ViewCompat.requireViewById(dialogView11, R.id.icon_05);
-                            icon05.setOnClickListener(v1111 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "05");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon06 = ViewCompat.requireViewById(dialogView11, R.id.icon_06);
-                            icon06.setOnClickListener(v115 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "06");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon07 = ViewCompat.requireViewById(dialogView11, R.id.icon_07);
-                            icon07.setOnClickListener(v116 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "07");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon08 = ViewCompat.requireViewById(dialogView11, R.id.icon_08);
-                            icon08.setOnClickListener(v117 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "08");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon09 = ViewCompat.requireViewById(dialogView11, R.id.icon_09);
-                            icon09.setOnClickListener(v118 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "09");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon10 = ViewCompat.requireViewById(dialogView11, R.id.icon_10);
-                            icon10.setOnClickListener(v119 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "10");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-                            LinearLayoutCompat icon11 = ViewCompat.requireViewById(dialogView11, R.id.icon_11);
-                            icon11.setOnClickListener(v1110 -> {
-                                db.open();
-                                db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "11");
-                                db.close();
-                                initBookmarkList();
-                                hideBottomSheetDialog();
-                            });
-
-                            bottomSheetDialog.setContentView(dialogView11);
-                            bottomSheetDialog.show();
-                            NinjaToast.show(this, R.string.toast_edit_successful);
-                        } catch (Throwable e) {
-                            Log.e(TAG, "Save", e);
-                            hideBottomSheetDialog();
-                            NinjaToast.show(this, R.string.toast_error);
-                        }
-                    });
                 } catch (Throwable e) {
-                    Log.e(TAG, "Edit", e);
+                    Log.e(TAG, "Encrypt", e);
                     NinjaToast.show(this, R.string.toast_error);
                 }
+
+                passTitleET.setText(passTitle);
+                passUserNameET.setText(decryptedUserName);
+                passUserPWET.setText(decryptedUserPW);
+                passURLET.setText(passContent);
+
+                MaterialButton actionOk = ViewCompat.requireViewById(dialogView1, R.id.action_ok);
+                actionOk.setOnClickListener(view1 -> {
+                    String inputPass_title = LayoutUnit.getText(passTitleET);
+                    String inputPass_url = LayoutUnit.getText(passURLET);
+
+                    String encryptedUserName;
+                    String encryptedUserPW;
+
+                    try {
+                        encryptedUserName = mahEncryptor.encode(LayoutUnit.getText(passUserNameET));
+                        encryptedUserPW = mahEncryptor.encode(LayoutUnit.getText(passUserPWET));
+                    } catch (Throwable e) {
+                        Log.e(TAG, "Encrypt", e);
+                        NinjaToast.show(this, R.string.toast_error);
+                        hideBottomSheetDialog();
+                        return;
+                    }
+
+                    db.open();
+                    db.update(Integer.parseInt(_id),
+                            HelperUnit.secString(inputPass_title),
+                            HelperUnit.secString(inputPass_url),
+                            HelperUnit.secString(encryptedUserName),
+                            HelperUnit.secString(encryptedUserPW), passCreation);
+                    db.close();
+                    initBookmarkList();
+                    hideSoftInput(passTitleET);
+                    NinjaToast.show(this, R.string.toast_edit_successful);
+                    hideBottomSheetDialog();
+                });
+                MaterialButton actionCancel = ViewCompat.requireViewById(dialogView1, R.id.action_cancel);
+                actionCancel.setOnClickListener(view1 -> {
+                    hideSoftInput(passTitleET);
+                    hideBottomSheetDialog();
+                });
+                HelperUnit.switchIcon(this, passCreation, "pass_creation", ibIcon);
+                bottomSheetDialog.setContentView(dialogView1);
+                bottomSheetDialog.show();
+
+                ibIcon.setOnClickListener(v1 -> {
+                    final String inputPass_title = LayoutUnit.getText(passTitleET);
+                    final String inputPass_url = LayoutUnit.getText(passURLET);
+                    String encryptedUserName;
+                    String encryptedUserPW;
+
+                    try {
+                        encryptedUserName = mahEncryptor.encode(LayoutUnit.getText(passUserNameET));
+                        encryptedUserPW = mahEncryptor.encode(LayoutUnit.getText(passUserPWET));
+                    } catch (Throwable e) {
+                        Log.e(TAG, "Save", e);
+                        hideBottomSheetDialog();
+                        NinjaToast.show(this, R.string.toast_error);
+                        return;
+                    }
+
+                    hideBottomSheetDialog();
+                    hideSoftInput(passTitleET);
+
+                    bottomSheetDialog = new BottomSheetDialog(this);
+                    View dialogView11 = View.inflate(this, R.layout.dialog_edit_icon, null);
+
+                    LinearLayoutCompat icon01 = ViewCompat.requireViewById(dialogView11, R.id.icon_01);
+                    icon01.setOnClickListener(v11 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "01");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon02 = ViewCompat.requireViewById(dialogView11, R.id.icon_02);
+                    icon02.setOnClickListener(v112 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "02");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon03 = ViewCompat.requireViewById(dialogView11, R.id.icon_03);
+                    icon03.setOnClickListener(v113 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "03");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon04 = ViewCompat.requireViewById(dialogView11, R.id.icon_04);
+                    icon04.setOnClickListener(v114 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "04");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon05 = ViewCompat.requireViewById(dialogView11, R.id.icon_05);
+                    icon05.setOnClickListener(v1111 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "05");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon06 = ViewCompat.requireViewById(dialogView11, R.id.icon_06);
+                    icon06.setOnClickListener(v115 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "06");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon07 = ViewCompat.requireViewById(dialogView11, R.id.icon_07);
+                    icon07.setOnClickListener(v116 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "07");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon08 = ViewCompat.requireViewById(dialogView11, R.id.icon_08);
+                    icon08.setOnClickListener(v117 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "08");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon09 = ViewCompat.requireViewById(dialogView11, R.id.icon_09);
+                    icon09.setOnClickListener(v118 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "09");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon10 = ViewCompat.requireViewById(dialogView11, R.id.icon_10);
+                    icon10.setOnClickListener(v119 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "10");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    LinearLayoutCompat icon11 = ViewCompat.requireViewById(dialogView11, R.id.icon_11);
+                    icon11.setOnClickListener(v1110 -> {
+                        db.open();
+                        db.update(Integer.parseInt(_id), HelperUnit.secString(inputPass_title), HelperUnit.secString(inputPass_url), HelperUnit.secString(encryptedUserName), HelperUnit.secString(encryptedUserPW), "11");
+                        db.close();
+                        initBookmarkList();
+                        hideBottomSheetDialog();
+                    });
+
+                    bottomSheetDialog.setContentView(dialogView11);
+                    bottomSheetDialog.show();
+                    NinjaToast.show(this, R.string.toast_edit_successful);
+                });
             });
 
             contextListDelete = ViewCompat.requireViewById(dialogView, R.id.menu_contextList_delete);
@@ -2188,7 +2181,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             bottomSheetDialog.show();
             return true;
         });
-        
+
         db.close();
     }
 
@@ -2443,52 +2436,52 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         try {
             decryptedUserName = mahEncryptor.decode(userName);
             decryptedUserPW = mahEncryptor.decode(passWord);
-
-            Intent copy = new Intent("unCopy");
-            PendingIntent copyUN = PendingIntent.getBroadcast(this, 0, copy, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            Intent copy2 = new Intent("pwCopy");
-            PendingIntent copyPW = PendingIntent.getBroadcast(this, 1, copy2, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            NotificationCompat.Builder builder;
-
-            NotificationManager mNotificationManager = ContextCompat.getSystemService(this, NotificationManager.class);
-            if (mNotificationManager == null) {
-                NinjaToast.show(this, R.string.toast_error);
-                return;
-            }
-
-            String CHANNEL_ID = "browser_not";// The id of the channel.
-            CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
-            NotificationChannel mChannel;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
-                mNotificationManager.createNotificationChannel(mChannel);
-            }
-            builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-
-            NotificationCompat.Action actionUN = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pasteUN), copyUN).build();
-            NotificationCompat.Action actionPW = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pastePW), copyPW).build();
-
-            Notification n = builder
-                    .setSmallIcon(R.drawable.ic_notification_ninja)
-                    .setContentTitle(this.getString(R.string.app_name))
-                    .setContentText(this.getString(R.string.toast_titleConfirm_paste))
-                    .setColor(ContextCompat.getColor(this, R.color.secondaryColor))
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setVibrate(new long[0])
-                    .addAction(actionUN)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .addAction(actionPW)
-                    .build();
-
-            if (!decryptedUserName.isEmpty() || !decryptedUserPW.isEmpty()) {
-                mNotificationManager.notify(0, n);
-            }
         } catch (Throwable e) {
             Log.e(TAG, "Login", e);
             NinjaToast.show(this, R.string.toast_error);
+            return;
+        }
+
+        Intent copy = new Intent("unCopy");
+        PendingIntent copyUN = PendingIntent.getBroadcast(this, 0, copy, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Intent copy2 = new Intent("pwCopy");
+        PendingIntent copyPW = PendingIntent.getBroadcast(this, 1, copy2, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        NotificationCompat.Builder builder;
+
+        NotificationManager mNotificationManager = ContextCompat.getSystemService(this, NotificationManager.class);
+        if (mNotificationManager == null) {
+            NinjaToast.show(this, R.string.toast_error);
+            return;
+        }
+
+        String CHANNEL_ID = "browser_not"; // The id of the channel.
+        CharSequence name = getString(R.string.app_name); // The user-visible name of the channel.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+        builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+
+        NotificationCompat.Action actionUN = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pasteUN), copyUN).build();
+        NotificationCompat.Action actionPW = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pastePW), copyPW).build();
+
+        Notification n = builder
+                .setSmallIcon(R.drawable.ic_notification_ninja)
+                .setContentTitle(this.getString(R.string.app_name))
+                .setContentText(this.getString(R.string.toast_titleConfirm_paste))
+                .setColor(ContextCompat.getColor(this, R.color.secondaryColor))
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVibrate(new long[0])
+                .addAction(actionUN)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .addAction(actionPW)
+                .build();
+
+        if (!decryptedUserName.isEmpty() || !decryptedUserPW.isEmpty()) {
+            mNotificationManager.notify(0, n);
         }
     }
 

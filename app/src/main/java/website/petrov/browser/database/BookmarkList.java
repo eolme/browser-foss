@@ -45,21 +45,19 @@ public class BookmarkList {
     private static final String dbTable = "pass";
     //establish connection with SQLiteDataBase
     @NonNull
-    private final Context c;
+    private final DatabaseHelper dbHelper;
     @Nullable
     private SQLiteDatabase sqlDb;
 
     public BookmarkList(@NonNull Context context) {
-        this.c = context;
+        dbHelper = new DatabaseHelper(context);
     }
 
     public void open() {
-        DatabaseHelper dbHelper = new DatabaseHelper(c);
         sqlDb = dbHelper.getWritableDatabase();
     }
 
     public void close() {
-        DatabaseHelper dbHelper = new DatabaseHelper(c);
         dbHelper.close();
     }
 
