@@ -12,7 +12,8 @@
 
 <hr>
 
-[![android-image]][android-url] [![travis-image]][travis-url] [![dependencies-imgage]][dependencies-url] [![issues-image]][issues-url] [![thanks-image]][thanks-url]
+[![android-image]][android-url] [![travis-image]][travis-url] [![dependencies-imgage]][dependencies-url] [![issues-image]][issues-url] [![thanks-image]][thanks-url] [![license-image]][license-url]
+
 [![sonar-bug-image]][sonar-url] [![sonar-vul-image]][sonar-url] [![sonar-rel-image]][sonar-url] [![sonar-sqr-image]][sonar-url] [![sonar-sec-image]][sonar-url] [![codacy-image]][codacy-url] 
 
 "Suze Browser" is open source Android browser based on WebView.
@@ -28,6 +29,8 @@ The intention is to provide a simple and light weight but powerful browser with 
 [issues-url]: https://github.com/eolme/browser-suze/issues
 [thanks-image]: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg?style=flat-square
 [thanks-url]: https://saythanks.io/to/eolme
+[license-image]: https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square
+[license-url]: https://github.com/eolme/browser-suze/blob/master/LICENSE.md
 [sonar-bug-image]: https://sonarcloud.io/api/project_badges/measure?project=eolme_browser-suze&metric=bugs
 [sonar-vul-image]: https://sonarcloud.io/api/project_badges/measure?project=eolme_browser-suze&metric=vulnerabilities
 [sonar-rel-image]: https://sonarcloud.io/api/project_badges/measure?project=eolme_browser-suze&metric=reliability_rating
