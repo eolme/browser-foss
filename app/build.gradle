@@ -60,7 +60,7 @@ android {
 dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha06'
 
-    implementation 'androidx.activity:activity:1.0.0-alpha07'
+    implementation 'androidx.activity:activity:1.0.0-alpha08'
     implementation 'androidx.annotation:annotation:1.0.2'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0-alpha01'
