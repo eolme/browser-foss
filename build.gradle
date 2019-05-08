@@ -10,7 +10,7 @@ buildscript {
         maven { url 'https://dl.bintray.com/hummatli/maven/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-alpha13'
+        classpath 'com.android.tools.build:gradle:3.5.0-beta01'
     }
 }
 
