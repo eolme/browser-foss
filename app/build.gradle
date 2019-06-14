@@ -64,7 +64,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0-beta01'
-    implementation 'androidx.core:core:1.2.0-alpha01'
+    implementation 'androidx.core:core:1.2.0-alpha02'
     implementation 'androidx.fragment:fragment:1.1.0-beta01'
     implementation 'androidx.preference:preference:1.1.0-beta01'
     implementation 'androidx.webkit:webkit:1.0.0'
